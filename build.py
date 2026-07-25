@@ -735,7 +735,7 @@ def build_html(identity, education, experience, projects,
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p class="footer-copy">© {year} {h(name)}.</p>
+      <p class="footer-copy">© {year} {h(name).upper()}</p>
       <div class="footer-links"><a href="#hero">Back to top ↑</a></div>
     </div>
   </footer>
@@ -797,7 +797,7 @@ def build_html(identity, education, experience, projects,
 
   <footer class="dark-footer" role="contentinfo">
     <div class="footer-inner">
-      <p>© {year} {h(name)}</p>
+      <p>© {year} {h(name).upper()}</p>
     </div>
   </footer>
 
