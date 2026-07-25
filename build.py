@@ -710,7 +710,15 @@ def build_html(identity, education, experience, projects,
 
   <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a class="nav-logo" href="#hero" aria-label="{h(name)} — home">{h(first)}</a>
+      <a class="nav-logo" href="#hero" aria-label="{h(name)} — home">
+        <span class="logo-icon-wrap" aria-hidden="true">
+          <svg class="header-logo-icon" width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#5E400F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5, 3.5)" />
+            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#E0A648" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>{h(first)}</span>
+      </a>
       <button class="nav-hamburger" id="nav-hamburger"
               aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
       <ul class="nav-links" id="nav-links" role="list">
@@ -744,7 +752,15 @@ def build_html(identity, education, experience, projects,
 
   <nav class="dark-nav" id="dark-nav" role="navigation" aria-label="Depth navigation">
     <div class="nav-inner">
-      <span class="dark-nav-logo">{h(name)}</span>
+      <span class="dark-nav-logo">
+        <span class="logo-icon-wrap" aria-hidden="true">
+          <svg class="header-logo-icon" width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#5E400F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5, 3.5)" />
+            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#E0A648" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        <span>{h(name)}</span>
+      </span>
       <div class="dark-tabs" id="dark-tabs" role="tablist" aria-label="Depth sections">
         <button class="dark-tab active" data-tab="philosophy"
                 id="tab-btn-philosophy" role="tab" aria-selected="true"
