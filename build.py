@@ -670,15 +670,17 @@ def build_html(identity, education, experience, projects,
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{h(name)} — Portfolio</title>
+  <title>{h(name)}</title>
   <meta name="description" content="{h(tagline)} · Personal portfolio of {h(name)}, Transport Management and Logistics Engineering undergraduate at University of Moratuwa and CIMA Finalist." />
-  <meta property="og:title"       content="{h(name)} — Portfolio" />
+  <meta property="og:title"       content="{h(name)}" />
   <meta property="og:description" content="{h(tagline)}" />
   <meta property="og:type"        content="website" />
   <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="static/assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300..700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="static/css/style.css" />
 </head>
 <body class="light">
@@ -711,13 +713,8 @@ def build_html(identity, education, experience, projects,
   <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a class="nav-logo" href="#hero" aria-label="{h(name)} — home">
-        <span class="logo-icon-wrap" aria-hidden="true">
-          <svg class="header-logo-icon" width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#5E400F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5, 3.5)" />
-            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#E0A648" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
-        <span>{h(first)}</span>
+        <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
+        <span>{h(name)}</span>
       </a>
       <button class="nav-hamburger" id="nav-hamburger"
               aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
@@ -753,12 +750,7 @@ def build_html(identity, education, experience, projects,
   <nav class="dark-nav" id="dark-nav" role="navigation" aria-label="Depth navigation">
     <div class="nav-inner">
       <span class="dark-nav-logo">
-        <span class="logo-icon-wrap" aria-hidden="true">
-          <svg class="header-logo-icon" width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#5E400F" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5, 3.5)" />
-            <path d="M 50 16 V 48 L 22 84 M 50 48 L 78 84" stroke="#E0A648" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
+        <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="28" height="28" />
         <span>{h(name)}</span>
       </span>
       <div class="dark-tabs" id="dark-tabs" role="tablist" aria-label="Depth sections">
