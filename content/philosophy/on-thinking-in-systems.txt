@@ -1,0 +1,9 @@
+Title: On Thinking in Systems
+Date: July 2025
+Body: There is a particular kind of clarity that comes from seeing the world not as a collection of objects, but as a web of relationships and flows. Supply chains taught me this. Not the textbook version — not the flowcharts and the SAP screenshots — but the actual lived reality of why a container sits at a port for six days, or why a warehouse runs out of a component that was theoretically in stock.
+
+The answer is almost never a single broken link. It is almost always a cascade: a decision made in isolation, a signal that arrived too late, a buffer that existed on paper and not in practice. Systems thinking is the discipline of tracing those cascades backward to their roots, and forward to their second- and third-order consequences.
+
+What I find beautiful about this is how transferable it is. Once you can see feedback loops, you see them everywhere — in financial markets, in career trajectories, in personal habits. The tools of operations research and the instincts of a good strategist are not as far apart as their vocabularies suggest.
+
+This is what I am building toward: the ability to stand at the intersection of those vocabularies and translate fluently between them.

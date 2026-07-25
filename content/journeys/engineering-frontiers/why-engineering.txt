@@ -1,0 +1,9 @@
+Title: Why Engineering?
+Date: 2024
+Body: I chose Transport Management and Logistics Engineering at the University of Moratuwa because it sits at an unusual intersection — rigorous enough to satisfy the part of me that likes proof and derivation, applied enough to connect to the real world of moving goods, people, and information at scale.
+
+Engineering teaches you that constraints are not obstacles to creativity — they are the conditions of creativity. A bridge must not fall. A schedule must hold. A system must degrade gracefully when one node fails. These are not limitations on thinking. They are what makes thinking matter.
+
+The first year was about foundations: mathematics, mechanics, programming. The second year introduced the domain: transport networks, logistics systems, operations research. I found myself most alive in the quantitative methods units — not because they were easy, but because they were demanding in the right way. They required building a model, questioning its assumptions, and sitting with uncertainty in a disciplined way.
+
+This journey is the record of what I am building, discovering, and occasionally breaking along the way.
