@@ -730,7 +730,7 @@ def build_html(identity, education, experience, projects,
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <p class="footer-copy">© {year} {h(name)}. Built with care.</p>
+      <p class="footer-copy">© {year} {h(name)}.</p>
       <div class="footer-links"><a href="#hero">Back to top ↑</a></div>
     </div>
   </footer>
