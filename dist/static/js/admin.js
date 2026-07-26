@@ -1,7 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
-   ADMIN PORTAL JS — Yasindu Mahaarachchi
+   ADMIN PORTAL JS — Yasindu Mahaarachchi (v2 Full System)
    Handles password auth, PAT storage in sessionStorage,
-   GitHub Contents API CRUD operations, file uploads & reordering.
+   GitHub Contents API CRUD operations across all content sections:
+   Identity, Education, Experience, Projects, Certifications, Events,
+   Leadership, Philosophy, Journeys, and Articles.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -104,7 +106,7 @@
 
   // ── GITHUB API HELPERS ───────────────────────────────────────
   async function ghFetch(path) {
-    const res = await fetch(`${API_BASE}/${path}`, {
+    const res = await fetch(`${API_BASE}/${path}?t=${Date.now()}`, {
       headers: { Authorization: `token ${patToken}` }
     });
     if (!res.ok) throw new Error(`API error ${res.status}: ${res.statusText}`);
@@ -186,7 +188,7 @@
     dashContent.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ap-text-muted);">Loading content from GitHub...</div>';
 
     try {
-      const [identity, education, experience, projects, certs, events, leadership, philosophy, articles] = await Promise.all([
+      const [identity, education, experience, projects, certs, events, leadership, philosophy, journeys, articles] = await Promise.all([
         fetchFile('content/identity.txt').catch(() => null),
         fetchFolder('content/education'),
         fetchFolder('content/experience'),
@@ -195,10 +197,11 @@
         fetchFolder('content/events'),
         fetchFolder('content/leadership'),
         fetchFolder('content/philosophy'),
+        fetchJourneys(),
         fetchFolder('content/articles')
       ]);
 
-      renderDashboard({ identity, education, experience, projects, certs, events, leadership, philosophy, articles });
+      renderDashboard({ identity, education, experience, projects, certs, events, leadership, philosophy, journeys, articles });
     } catch (err) {
       dashContent.innerHTML = `<div class="ap-notice" style="border-color:var(--ap-danger);color:var(--ap-danger)">Failed to load content: ${err.message}</div>`;
     }
@@ -234,9 +237,29 @@
         }
       }));
       const valid = parsedFiles.filter(Boolean);
-      // Sort by Order field if present
       valid.sort((a, b) => parseInt(a.order || '99') - parseInt(b.order || '99'));
       return valid;
+    } catch {
+      return [];
+    }
+  }
+
+  async function fetchJourneys() {
+    try {
+      const items = await ghFetch('content/journeys');
+      if (!Array.isArray(items)) return [];
+      const dirs = items.filter(f => f.type === 'dir');
+
+      const journeys = await Promise.all(dirs.map(async (dir) => {
+        const entries = await fetchFolder(dir.path);
+        return {
+          slug: dir.name,
+          title: dir.name.replace(/-/g, ' ').toUpperCase(),
+          path: dir.path,
+          entries: entries
+        };
+      }));
+      return journeys;
     } catch {
       return [];
     }
@@ -247,23 +270,32 @@
     let currentKey = null;
     let currentLines = [];
 
-    text.split('\n').forEach(line => {
+    const lines = text.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // If key is body, all remaining lines belong to body
+      if (currentKey === 'body') {
+        currentLines.push(line);
+        continue;
+      }
+
       if (line.includes(':') && !line.startsWith(' ') && !line.startsWith('\t')) {
         const colonIndex = line.indexOf(':');
         const candidate = line.slice(0, colonIndex).trim();
-        if (candidate && !candidate.includes(' ')) {
+        if (candidate && !candidate.includes(' ') && candidate.length < 25) {
           if (currentKey !== null) {
             fields[currentKey] = currentLines.join('\n').trim();
           }
           currentKey = candidate.toLowerCase();
           currentLines = [line.slice(colonIndex + 1).trim()];
-          return;
+          continue;
         }
       }
       if (currentKey !== null) {
         currentLines.push(line);
       }
-    });
+    }
     if (currentKey !== null) {
       fields[currentKey] = currentLines.join('\n').trim();
     }
@@ -298,6 +330,26 @@
                 <div class="ap-item-actions">
                   <button class="ap-btn-icon" onclick="window.editEducation('${e._slug}')">✏️</button>
                   <button class="ap-btn-icon danger" onclick="window.deleteItem('${e._path}', '${e._sha}')">🗑️</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Experience Card -->
+        <div class="ap-dash-card">
+          <div class="ap-dash-card-header">
+            <h3 class="ap-dash-card-title">💼 Experience</h3>
+            <span class="ap-dash-card-count">${data.experience.length}</span>
+            <button class="ap-btn ap-btn-primary" id="ap-new-experience">+ Add Experience</button>
+          </div>
+          <div class="ap-item-list">
+            ${data.experience.map(exp => `
+              <div class="ap-item-row">
+                <span class="ap-item-name">${exp.title || exp._slug}</span>
+                <div class="ap-item-actions">
+                  <button class="ap-btn-icon" onclick="window.editExperience('${exp._slug}')">✏️</button>
+                  <button class="ap-btn-icon danger" onclick="window.deleteItem('${exp._path}', '${exp._sha}')">🗑️</button>
                 </div>
               </div>
             `).join('')}
@@ -364,6 +416,49 @@
           </div>
         </div>
 
+        <!-- Leadership Card -->
+        <div class="ap-dash-card">
+          <div class="ap-dash-card-header">
+            <h3 class="ap-dash-card-title">🏆 Leadership</h3>
+            <span class="ap-dash-card-count">${data.leadership.length}</span>
+            <button class="ap-btn ap-btn-primary" id="ap-new-leadership">+ New Leadership</button>
+          </div>
+          <div class="ap-item-list">
+            ${data.leadership.map(l => `
+              <div class="ap-item-row">
+                <span class="ap-item-name">${l.organization || l._slug}</span>
+                <div class="ap-item-actions">
+                  <button class="ap-btn-icon" onclick="window.editLeadership('${l._slug}')">✏️</button>
+                  <button class="ap-btn-icon danger" onclick="window.deleteItem('${l._path}', '${l._sha}')">🗑️</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Journeys Card -->
+        <div class="ap-dash-card">
+          <div class="ap-dash-card-header">
+            <h3 class="ap-dash-card-title">🗺️ Journeys (Dark Mode)</h3>
+            <span class="ap-dash-card-count">${data.journeys.reduce((sum, j) => sum + j.entries.length, 0)}</span>
+            <button class="ap-btn ap-btn-primary" id="ap-new-journey">+ New Entry</button>
+          </div>
+          <div class="ap-item-list">
+            ${data.journeys.map(j => `
+              <div style="font-size:0.75rem;color:var(--ap-accent);font-weight:600;margin-top:6px;text-transform:uppercase;">${j.title}</div>
+              ${j.entries.map(e => `
+                <div class="ap-item-row">
+                  <span class="ap-item-name">${e.title || e._slug}</span>
+                  <div class="ap-item-actions">
+                    <button class="ap-btn-icon" onclick="window.editJourneyEntry('${j.slug}', '${e._slug}')">✏️</button>
+                    <button class="ap-btn-icon danger" onclick="window.deleteItem('${e._path}', '${e._sha}')">🗑️</button>
+                  </div>
+                </div>
+              `).join('')}
+            `).join('')}
+          </div>
+        </div>
+
         <!-- Philosophy Card -->
         <div class="ap-dash-card">
           <div class="ap-dash-card-header">
@@ -389,9 +484,12 @@
     // Bind Actions
     document.getElementById('ap-edit-identity').onclick = () => openIdentityEditor(data.identity);
     document.getElementById('ap-new-education').onclick = () => openEducationEditor();
+    document.getElementById('ap-new-experience').onclick = () => openExperienceEditor();
     document.getElementById('ap-new-project').onclick = () => openProjectEditor();
     document.getElementById('ap-new-cert').onclick = () => openCertEditor();
     document.getElementById('ap-new-event').onclick = () => openEventEditor();
+    document.getElementById('ap-new-leadership').onclick = () => openLeadershipEditor();
+    document.getElementById('ap-new-journey').onclick = () => openJourneyEditor();
     document.getElementById('ap-new-philosophy').onclick = () => openPhilosophyEditor();
   }
 
@@ -467,7 +565,7 @@
     document.getElementById('ap-identity-form').onsubmit = async (e) => {
       e.preventDefault();
 
-      // Check if photo file uploaded
+      // Check photo file
       const photoFileInput = document.getElementById('id-photo-file');
       if (photoFileInput.files && photoFileInput.files[0]) {
         try {
@@ -485,7 +583,7 @@
         }
       }
 
-      // Check if CV file uploaded
+      // Check CV file
       const cvFileInput = document.getElementById('id-cv-file');
       if (cvFileInput.files && cvFileInput.files[0]) {
         try {
@@ -503,7 +601,6 @@
         }
       }
 
-      // Update identity.txt
       const txt = [
         `Name: ${document.getElementById('id-name').value}`,
         `Tagline: ${document.getElementById('id-tagline').value}`,
@@ -522,7 +619,7 @@
 
       try {
         await ghPut('content/identity.txt', utf8ToBase64(txt), identity._sha, 'admin: update identity.txt');
-        showToast('Identity & profile updated! Rebuild triggered.');
+        showToast('Identity & profile updated!');
         editorContainer.style.display = 'none';
         loadDashboard();
       } catch (err) {
@@ -565,7 +662,7 @@
             <textarea class="ap-textarea" id="edu-detail">${edu.detail || ''}</textarea>
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Display Order (e.g. 1 for top, 2 for second)</label>
+            <label class="ap-label">Display Order (1 = top)</label>
             <input type="number" class="ap-input" id="edu-order" value="${edu.order || '1'}" min="1" max="99" required />
           </div>
           <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Education Entry</button>
@@ -589,6 +686,67 @@
       try {
         await ghPut(path, utf8ToBase64(txt), edu._sha, `admin: save education ${slug}`);
         showToast('Education entry saved!');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
+  // ── EXPERIENCE EDITOR ────────────────────────────────────────
+  function openExperienceEditor(exp = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !exp._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Add Experience Entry' : 'Edit Experience Entry'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-exp-form">
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Slug (filename, e.g. freelance-media)</label>
+              <input class="ap-input" id="exp-slug" required placeholder="freelance-media" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Title / Role</label>
+            <input class="ap-input" id="exp-title" value="${exp.title || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Company / Client</label>
+            <input class="ap-input" id="exp-company" value="${exp.company || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Period (e.g., 2022 – Present)</label>
+            <input class="ap-input" id="exp-period" value="${exp.period || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Description</label>
+            <textarea class="ap-textarea" id="exp-desc" style="min-height:140px;">${exp.description || ''}</textarea>
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Experience Entry</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-exp-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const slug = isNew ? document.getElementById('exp-slug').value.trim() : exp._slug;
+      const path = `content/experience/${slug}.txt`;
+
+      const txt = [
+        `Title: ${document.getElementById('exp-title').value}`,
+        `Company: ${document.getElementById('exp-company').value}`,
+        `Period: ${document.getElementById('exp-period').value}`,
+        `Description: ${document.getElementById('exp-desc').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), exp._sha, `admin: save experience ${slug}`);
+        showToast('Experience entry saved!');
         editorContainer.style.display = 'none';
         loadDashboard();
       } catch (err) {
@@ -650,7 +808,7 @@
             <input class="ap-input" id="proj-live" value="${project.live || ''}" />
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Display Order (e.g. 1 for top)</label>
+            <label class="ap-label">Display Order (1 = top)</label>
             <input type="number" class="ap-input" id="proj-order" value="${project.order || '1'}" min="1" max="99" />
           </div>
           <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Project</button>
@@ -729,7 +887,7 @@
             <input class="ap-input" id="cert-logo" value="${cert.logo || ''}" placeholder="mckinsey.png" />
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Display Order (e.g. 1 for top)</label>
+            <label class="ap-label">Display Order (1 = top)</label>
             <input type="number" class="ap-input" id="cert-order" value="${cert.order || '1'}" min="1" max="99" />
           </div>
           <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Certification</button>
@@ -776,7 +934,7 @@
         <form id="ap-event-form">
           ${isNew ? `
             <div class="ap-form-group">
-              <label class="ap-label">Slug (filename)</label>
+              <label class="ap-label">Slug (filename, e.g. hackathon-2025)</label>
               <input class="ap-input" id="event-slug" required placeholder="hackathon-2025" />
             </div>
           ` : ''}
@@ -785,7 +943,7 @@
             <input class="ap-input" id="event-title" value="${event.title || ''}" required />
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Type (e.g. Competition / Workshop / Conference)</label>
+            <label class="ap-label">Type (Competition / Hackathon / Workshop / Conference)</label>
             <input class="ap-input" id="event-type" value="${event.type || 'Competition'}" required />
           </div>
           <div class="ap-form-group">
@@ -834,6 +992,128 @@
     };
   }
 
+  // ── LEADERSHIP EDITOR ────────────────────────────────────────
+  function openLeadershipEditor(lead = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !lead._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Add Leadership Entry' : 'Edit Leadership Entry'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-lead-form">
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Slug (filename, e.g. rotaract-uom)</label>
+              <input class="ap-input" id="lead-slug" required placeholder="rotaract-uom" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Organization Name</label>
+            <input class="ap-input" id="lead-org" value="${lead.organization || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Role / Position</label>
+            <input class="ap-input" id="lead-role" value="${lead.role || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Period (e.g., 2025 – Present)</label>
+            <input class="ap-input" id="lead-period" value="${lead.period || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Description</label>
+            <textarea class="ap-textarea" id="lead-desc">${lead.description || ''}</textarea>
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Leadership Entry</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-lead-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const slug = isNew ? document.getElementById('lead-slug').value.trim() : lead._slug;
+      const path = `content/leadership/${slug}.txt`;
+
+      const txt = [
+        `Organization: ${document.getElementById('lead-org').value}`,
+        `Role: ${document.getElementById('lead-role').value}`,
+        `Period: ${document.getElementById('lead-period').value}`,
+        `Description: ${document.getElementById('lead-desc').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), lead._sha, `admin: save leadership ${slug}`);
+        showToast('Leadership entry saved!');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
+  // ── JOURNEY ENTRY EDITOR ─────────────────────────────────────
+  function openJourneyEditor(journeySlug = 'cima', entry = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !entry._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Create Journey Entry' : 'Edit Journey Entry'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-journey-form">
+          <div class="ap-form-group">
+            <label class="ap-label">Journey Folder</label>
+            <input class="ap-input" id="j-folder" value="${journeySlug}" required placeholder="cima" />
+          </div>
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Entry Slug (filename)</label>
+              <input class="ap-input" id="j-slug" required placeholder="strategic-level-prep" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Entry Title</label>
+            <input class="ap-input" id="j-title" value="${entry.title || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Date (e.g. 2025)</label>
+            <input class="ap-input" id="j-date" value="${entry.date || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Body Text (Separated by blank lines)</label>
+            <textarea class="ap-textarea" id="j-body" style="min-height:220px;" required>${entry.body || ''}</textarea>
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Journey Entry</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-journey-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const folder = document.getElementById('j-folder').value.trim();
+      const slug = isNew ? document.getElementById('j-slug').value.trim() : entry._slug;
+      const path = `content/journeys/${folder}/${slug}.txt`;
+
+      const txt = [
+        `Title: ${document.getElementById('j-title').value}`,
+        `Date: ${document.getElementById('j-date').value}`,
+        `Body: ${document.getElementById('j-body').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), entry._sha, `admin: save journey ${folder}/${slug}`);
+        showToast('Journey entry saved!');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
   // ── PHILOSOPHY EDITOR ────────────────────────────────────────
   function openPhilosophyEditor(phil = {}) {
     editorContainer.style.display = 'block';
@@ -847,8 +1127,8 @@
         <form id="ap-phil-form">
           ${isNew ? `
             <div class="ap-form-group">
-              <label class="ap-label">Slug (filename)</label>
-              <input class="ap-input" id="phil-slug" required placeholder="on-systems-thinking" />
+              <label class="ap-label">Slug (filename, e.g. on-thinking-in-systems)</label>
+              <input class="ap-input" id="phil-slug" required placeholder="on-thinking-in-systems" />
             </div>
           ` : ''}
           <div class="ap-form-group">
@@ -907,6 +1187,11 @@
     openEducationEditor(edu);
   };
 
+  window.editExperience = async (slug) => {
+    const exp = await fetchFile(`content/experience/${slug}.txt`);
+    openExperienceEditor(exp);
+  };
+
   window.editProject = async (slug) => {
     const proj = await fetchFile(`content/projects/${slug}.txt`);
     openProjectEditor(proj);
@@ -920,6 +1205,16 @@
   window.editEvent = async (slug) => {
     const ev = await fetchFile(`content/events/${slug}.txt`);
     openEventEditor(ev);
+  };
+
+  window.editLeadership = async (slug) => {
+    const l = await fetchFile(`content/leadership/${slug}.txt`);
+    openLeadershipEditor(l);
+  };
+
+  window.editJourneyEntry = async (jSlug, entrySlug) => {
+    const entry = await fetchFile(`content/journeys/${jSlug}/${entrySlug}.txt`);
+    openJourneyEditor(jSlug, entry);
   };
 
   window.editPhilosophy = async (slug) => {
