@@ -1405,7 +1405,8 @@ body.dark .badge-reading {
   font-size: 0.8rem;
   color: var(--text-light);
   font-family: var(--font-mono);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
 }
 
 /* ─── EMPTY STATES ───────────────────────────────────────────── */
