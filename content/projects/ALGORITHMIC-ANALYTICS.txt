@@ -1,0 +1,10 @@
+Title: Algorithmic Analytics & Automation Project
+Tags: Python, Statistics, API Integration, Automation, Quantitative Finance
+Description: Developed a suite of automated analytical bots using Python to ingest and process live API data streams. Applied advanced statistical models — including Poisson distributions and fractional Kelly strategies — to perform quantitative market analysis and build predictive forecasting pipelines. The system reduced manual processing overhead significantly and enabled real-time decision support.
+Metric: Automated end-to-end data pipeline replacing hours of manual analysis per cycle
+GitHub: https://github.com/yasindu203
+Drive: 
+Live: 
+Status: Completed
+Order: 1
+Screenshot: 
