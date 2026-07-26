@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    ADMIN PORTAL JS — Yasindu Mahaarachchi
    Handles password auth, PAT storage in sessionStorage,
-   GitHub Contents API CRUD operations & text template encoding.
+   GitHub Contents API CRUD operations, file uploads & reordering.
    ═══════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -81,7 +81,6 @@
       patError.style.display = 'none';
       patSubmit.textContent = 'Verifying Token...';
 
-      // Test token against GitHub API
       try {
         const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
           headers: { Authorization: `token ${token}` }
@@ -159,6 +158,19 @@
     return decodeURIComponent(escape(atob(str.replace(/\n/g, ''))));
   }
 
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        const base64 = result.slice(result.indexOf(',') + 1);
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
   // Toast Notification
   function showToast(msg, isError = false) {
     const toast = document.createElement('div');
@@ -174,8 +186,10 @@
     dashContent.innerHTML = '<div style="text-align:center;padding:40px;color:var(--ap-text-muted);">Loading content from GitHub...</div>';
 
     try {
-      const [identity, projects, certs, events, leadership, philosophy, articles] = await Promise.all([
+      const [identity, education, experience, projects, certs, events, leadership, philosophy, articles] = await Promise.all([
         fetchFile('content/identity.txt').catch(() => null),
+        fetchFolder('content/education'),
+        fetchFolder('content/experience'),
         fetchFolder('content/projects'),
         fetchFolder('content/certifications'),
         fetchFolder('content/events'),
@@ -184,7 +198,7 @@
         fetchFolder('content/articles')
       ]);
 
-      renderDashboard({ identity, projects, certs, events, leadership, philosophy, articles });
+      renderDashboard({ identity, education, experience, projects, certs, events, leadership, philosophy, articles });
     } catch (err) {
       dashContent.innerHTML = `<div class="ap-notice" style="border-color:var(--ap-danger);color:var(--ap-danger)">Failed to load content: ${err.message}</div>`;
     }
@@ -203,7 +217,7 @@
     try {
       const items = await ghFetch(folderPath);
       if (!Array.isArray(items)) return [];
-      const txtFiles = items.filter(f => f.name.endswith ? f.name.endsWith('.txt') : f.name.slice(-4) === '.txt');
+      const txtFiles = items.filter(f => f.name.endsWith ? f.name.endsWith('.txt') : f.name.slice(-4) === '.txt');
       
       const parsedFiles = await Promise.all(txtFiles.map(async (file) => {
         try {
@@ -219,7 +233,10 @@
           return null;
         }
       }));
-      return parsedFiles.filter(Boolean);
+      const valid = parsedFiles.filter(Boolean);
+      // Sort by Order field if present
+      valid.sort((a, b) => parseInt(a.order || '99') - parseInt(b.order || '99'));
+      return valid;
     } catch {
       return [];
     }
@@ -238,7 +255,7 @@
           if (currentKey !== null) {
             fields[currentKey] = currentLines.join('\n').trim();
           }
-          currentKey = candidate.lower ? candidate.lower() : candidate.toLowerCase();
+          currentKey = candidate.toLowerCase();
           currentLines = [line.slice(colonIndex + 1).trim()];
           return;
         }
@@ -253,17 +270,38 @@
     return fields;
   }
 
+  // ── RENDER DASHBOARD ─────────────────────────────────────────
   function renderDashboard(data) {
     dashContent.innerHTML = `
       <div class="ap-dash-grid">
         <!-- Identity Card -->
         <div class="ap-dash-card">
           <div class="ap-dash-card-header">
-            <h3 class="ap-dash-card-title">👤 Identity & Skills</h3>
+            <h3 class="ap-dash-card-title">👤 Identity, Photo &amp; Skills</h3>
             <button class="ap-btn ap-btn-secondary" id="ap-edit-identity">Edit Profile</button>
           </div>
           <p style="font-size:0.9rem;"><strong>${data.identity?.name || 'Yasindu Mahaarachchi'}</strong></p>
           <p style="font-size:0.8rem;color:var(--ap-text-muted);">${data.identity?.tagline || ''}</p>
+        </div>
+
+        <!-- Education Card -->
+        <div class="ap-dash-card">
+          <div class="ap-dash-card-header">
+            <h3 class="ap-dash-card-title">🎓 Education</h3>
+            <span class="ap-dash-card-count">${data.education.length}</span>
+            <button class="ap-btn ap-btn-primary" id="ap-new-education">+ Add Qualification</button>
+          </div>
+          <div class="ap-item-list">
+            ${data.education.map(e => `
+              <div class="ap-item-row">
+                <span class="ap-item-name">[Order ${e.order || '99'}] ${e.institution || e._slug}</span>
+                <div class="ap-item-actions">
+                  <button class="ap-btn-icon" onclick="window.editEducation('${e._slug}')">✏️</button>
+                  <button class="ap-btn-icon danger" onclick="window.deleteItem('${e._path}', '${e._sha}')">🗑️</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
         </div>
 
         <!-- Projects Card -->
@@ -276,7 +314,7 @@
           <div class="ap-item-list">
             ${data.projects.map(p => `
               <div class="ap-item-row">
-                <span class="ap-item-name">${p.title || p._slug}</span>
+                <span class="ap-item-name">[Order ${p.order || '99'}] ${p.title || p._slug}</span>
                 <div class="ap-item-actions">
                   <button class="ap-btn-icon" onclick="window.editProject('${p._slug}')">✏️</button>
                   <button class="ap-btn-icon danger" onclick="window.deleteItem('${p._path}', '${p._sha}')">🗑️</button>
@@ -296,7 +334,7 @@
           <div class="ap-item-list">
             ${data.certs.map(c => `
               <div class="ap-item-row">
-                <span class="ap-item-name">${c.title || c._slug}</span>
+                <span class="ap-item-name">[Order ${c.order || '99'}] ${c.title || c._slug}</span>
                 <div class="ap-item-actions">
                   <button class="ap-btn-icon" onclick="window.editCert('${c._slug}')">✏️</button>
                   <button class="ap-btn-icon danger" onclick="window.deleteItem('${c._path}', '${c._sha}')">🗑️</button>
@@ -348,19 +386,22 @@
       </div>
     `;
 
-    // Bind edit identity
+    // Bind Actions
     document.getElementById('ap-edit-identity').onclick = () => openIdentityEditor(data.identity);
+    document.getElementById('ap-new-education').onclick = () => openEducationEditor();
     document.getElementById('ap-new-project').onclick = () => openProjectEditor();
     document.getElementById('ap-new-cert').onclick = () => openCertEditor();
+    document.getElementById('ap-new-event').onclick = () => openEventEditor();
+    document.getElementById('ap-new-philosophy').onclick = () => openPhilosophyEditor();
   }
 
-  // ── IDENTITY EDITOR ──────────────────────────────────────────
+  // ── IDENTITY & PHOTO EDITOR ──────────────────────────────────
   function openIdentityEditor(identity = {}) {
     editorContainer.style.display = 'block';
     editorContainer.innerHTML = `
       <div class="ap-editor-panel">
         <div class="ap-editor-header">
-          <h2 class="ap-editor-title">Edit Identity & Skills</h2>
+          <h2 class="ap-editor-title">Edit Identity, Photo &amp; Skills</h2>
           <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
         </div>
         <form id="ap-identity-form">
@@ -393,20 +434,76 @@
             <input class="ap-input" id="id-linkedin" value="${identity.linkedin || ''}" />
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Skills (comma-separated)</label>
+            <label class="ap-label">Skills (comma-separated list)</label>
             <input class="ap-input" id="id-skills" value="${identity.skills || ''}" />
           </div>
           <div class="ap-form-group">
             <label class="ap-label">Formspree Endpoint ID</label>
             <input class="ap-input" id="id-formspree" value="${identity.formspree || ''}" />
           </div>
-          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Changes to GitHub</button>
+
+          <!-- Photo & CV Uploaders -->
+          <div style="border-top:1px solid var(--ap-border);padding-top:20px;margin-top:20px;">
+            <h3 style="font-size:1rem;color:var(--ap-accent);margin-bottom:12px;">📷 Change Profile Photo</h3>
+            <div class="ap-form-group">
+              <input type="file" id="id-photo-file" accept="image/*" class="ap-input" />
+              <p style="font-size:0.75rem;color:var(--ap-text-muted);">Upload a new photo to replace <code>static/assets/profile.jpg</code>.</p>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--ap-border);padding-top:20px;margin-top:20px;">
+            <h3 style="font-size:1rem;color:var(--ap-accent);margin-bottom:12px;">📄 Upload New CV (PDF)</h3>
+            <div class="ap-form-group">
+              <input type="file" id="id-cv-file" accept=".pdf" class="ap-input" />
+              <p style="font-size:0.75rem;color:var(--ap-text-muted);">Upload a new PDF to replace <code>static/assets/cv.pdf</code>.</p>
+            </div>
+          </div>
+
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full" style="margin-top:24px;">Save All Changes to GitHub</button>
         </form>
       </div>
     `;
 
     document.getElementById('ap-identity-form').onsubmit = async (e) => {
       e.preventDefault();
+
+      // Check if photo file uploaded
+      const photoFileInput = document.getElementById('id-photo-file');
+      if (photoFileInput.files && photoFileInput.files[0]) {
+        try {
+          showToast('Uploading profile photo...');
+          const photoBase64 = await fileToBase64(photoFileInput.files[0]);
+          let existingSha = null;
+          try {
+            const existing = await ghFetch('static/assets/profile.jpg');
+            existingSha = existing.sha;
+          } catch {}
+          await ghPut('static/assets/profile.jpg', photoBase64, existingSha, 'admin: update profile photo');
+          showToast('Profile photo updated!');
+        } catch (err) {
+          showToast('Photo upload failed: ' + err.message, true);
+        }
+      }
+
+      // Check if CV file uploaded
+      const cvFileInput = document.getElementById('id-cv-file');
+      if (cvFileInput.files && cvFileInput.files[0]) {
+        try {
+          showToast('Uploading CV PDF...');
+          const cvBase64 = await fileToBase64(cvFileInput.files[0]);
+          let existingSha = null;
+          try {
+            const existing = await ghFetch('static/assets/cv.pdf');
+            existingSha = existing.sha;
+          } catch {}
+          await ghPut('static/assets/cv.pdf', cvBase64, existingSha, 'admin: update cv.pdf');
+          showToast('CV PDF updated!');
+        } catch (err) {
+          showToast('CV upload failed: ' + err.message, true);
+        }
+      }
+
+      // Update identity.txt
       const txt = [
         `Name: ${document.getElementById('id-name').value}`,
         `Tagline: ${document.getElementById('id-tagline').value}`,
@@ -418,14 +515,80 @@
         `Location: ${document.getElementById('id-location').value}`,
         `Languages: ${identity.languages || 'English, Sinhala'}`,
         `Skills: ${document.getElementById('id-skills').value}`,
-        `CV: ${identity.cv || 'static/assets/cv.pdf'}`,
-        `Photo: ${identity.photo || 'static/assets/profile.jpg'}`,
+        `CV: static/assets/cv.pdf`,
+        `Photo: static/assets/profile.jpg`,
         `Formspree: ${document.getElementById('id-formspree').value}`
       ].join('\n');
 
       try {
         await ghPut('content/identity.txt', utf8ToBase64(txt), identity._sha, 'admin: update identity.txt');
-        showToast('Identity updated! Site rebuild triggered.');
+        showToast('Identity & profile updated! Rebuild triggered.');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
+  // ── EDUCATION EDITOR ─────────────────────────────────────────
+  function openEducationEditor(edu = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !edu._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Add Educational Qualification' : 'Edit Educational Qualification'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-edu-form">
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Slug (filename, e.g. university-of-moratuwa)</label>
+              <input class="ap-input" id="edu-slug" required placeholder="university-of-moratuwa" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Institution Name</label>
+            <input class="ap-input" id="edu-institution" value="${edu.institution || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Degree / Stream Title</label>
+            <input class="ap-input" id="edu-degree" value="${edu.degree || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Period (e.g., 2024 – Present)</label>
+            <input class="ap-input" id="edu-period" value="${edu.period || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Detail / Extra Points</label>
+            <textarea class="ap-textarea" id="edu-detail">${edu.detail || ''}</textarea>
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Display Order (e.g. 1 for top, 2 for second)</label>
+            <input type="number" class="ap-input" id="edu-order" value="${edu.order || '1'}" min="1" max="99" required />
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Education Entry</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-edu-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const slug = isNew ? document.getElementById('edu-slug').value.trim() : edu._slug;
+      const path = `content/education/${slug}.txt`;
+
+      const txt = [
+        `Institution: ${document.getElementById('edu-institution').value}`,
+        `Degree: ${document.getElementById('edu-degree').value}`,
+        `Period: ${document.getElementById('edu-period').value}`,
+        `Detail: ${document.getElementById('edu-detail').value}`,
+        `Order: ${document.getElementById('edu-order').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), edu._sha, `admin: save education ${slug}`);
+        showToast('Education entry saved!');
         editorContainer.style.display = 'none';
         loadDashboard();
       } catch (err) {
@@ -447,8 +610,8 @@
         <form id="ap-project-form">
           ${isNew ? `
             <div class="ap-form-group">
-              <label class="ap-label">Project Slug (filename, e.g. supply-chain-bot)</label>
-              <input class="ap-input" id="proj-slug" required placeholder="my-awesome-project" />
+              <label class="ap-label">Project Slug (filename, e.g. algorithmic-analytics)</label>
+              <input class="ap-input" id="proj-slug" required placeholder="algorithmic-analytics" />
             </div>
           ` : ''}
           <div class="ap-form-group">
@@ -486,6 +649,10 @@
             <label class="ap-label">Live Demo Link</label>
             <input class="ap-input" id="proj-live" value="${project.live || ''}" />
           </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Display Order (e.g. 1 for top)</label>
+            <input type="number" class="ap-input" id="proj-order" value="${project.order || '1'}" min="1" max="99" />
+          </div>
           <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Project</button>
         </form>
       </div>
@@ -505,6 +672,7 @@
         `Drive: ${document.getElementById('proj-drive').value}`,
         `Live: ${document.getElementById('proj-live').value}`,
         `Status: ${document.getElementById('proj-status').value}`,
+        `Order: ${document.getElementById('proj-order').value}`,
         `Screenshot: ${project.screenshot || ''}`
       ].join('\n');
 
@@ -560,6 +728,10 @@
             <label class="ap-label">Logo Filename (in content/logos/)</label>
             <input class="ap-input" id="cert-logo" value="${cert.logo || ''}" placeholder="mckinsey.png" />
           </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Display Order (e.g. 1 for top)</label>
+            <input type="number" class="ap-input" id="cert-order" value="${cert.order || '1'}" min="1" max="99" />
+          </div>
           <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Certification</button>
         </form>
       </div>
@@ -577,7 +749,7 @@
         `Description: ${document.getElementById('cert-desc').value}`,
         `Verify: ${document.getElementById('cert-verify').value}`,
         `Logo: ${document.getElementById('cert-logo').value}`,
-        `Order: ${cert.order || '99'}`
+        `Order: ${document.getElementById('cert-order').value}`
       ].join('\n');
 
       try {
@@ -591,7 +763,134 @@
     };
   }
 
-  // ── GLOBAL DELETE ────────────────────────────────────────────
+  // ── EVENT EDITOR ─────────────────────────────────────────────
+  function openEventEditor(event = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !event._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Create Event' : 'Edit Event'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-event-form">
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Slug (filename)</label>
+              <input class="ap-input" id="event-slug" required placeholder="hackathon-2025" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Event Title</label>
+            <input class="ap-input" id="event-title" value="${event.title || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Type (e.g. Competition / Workshop / Conference)</label>
+            <input class="ap-input" id="event-type" value="${event.type || 'Competition'}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Organizer</label>
+            <input class="ap-input" id="event-organizer" value="${event.organizer || ''}" />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Date (e.g., July 2025)</label>
+            <input class="ap-input" id="event-date" value="${event.date || ''}" />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Description</label>
+            <textarea class="ap-textarea" id="event-desc">${event.description || ''}</textarea>
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Link</label>
+            <input class="ap-input" id="event-link" value="${event.link || ''}" />
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Event</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-event-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const slug = isNew ? document.getElementById('event-slug').value.trim() : event._slug;
+      const path = `content/events/${slug}.txt`;
+
+      const txt = [
+        `Title: ${document.getElementById('event-title').value}`,
+        `Type: ${document.getElementById('event-type').value}`,
+        `Organizer: ${document.getElementById('event-organizer').value}`,
+        `Date: ${document.getElementById('event-date').value}`,
+        `Description: ${document.getElementById('event-desc').value}`,
+        `Link: ${document.getElementById('event-link').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), event._sha, `admin: save event ${slug}`);
+        showToast('Event saved!');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
+  // ── PHILOSOPHY EDITOR ────────────────────────────────────────
+  function openPhilosophyEditor(phil = {}) {
+    editorContainer.style.display = 'block';
+    const isNew = !phil._slug;
+    editorContainer.innerHTML = `
+      <div class="ap-editor-panel">
+        <div class="ap-editor-header">
+          <h2 class="ap-editor-title">${isNew ? 'Create Philosophy Essay' : 'Edit Essay'}</h2>
+          <button class="ap-btn ap-btn-secondary" onclick="document.getElementById('ap-editor-container').style.display='none'">Close</button>
+        </div>
+        <form id="ap-phil-form">
+          ${isNew ? `
+            <div class="ap-form-group">
+              <label class="ap-label">Slug (filename)</label>
+              <input class="ap-input" id="phil-slug" required placeholder="on-systems-thinking" />
+            </div>
+          ` : ''}
+          <div class="ap-form-group">
+            <label class="ap-label">Title</label>
+            <input class="ap-input" id="phil-title" value="${phil.title || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Date (e.g. July 2025)</label>
+            <input class="ap-input" id="phil-date" value="${phil.date || ''}" required />
+          </div>
+          <div class="ap-form-group">
+            <label class="ap-label">Body Text (Separated by blank lines)</label>
+            <textarea class="ap-textarea" id="phil-body" style="min-height:220px;" required>${phil.body || ''}</textarea>
+          </div>
+          <button type="submit" class="ap-btn ap-btn-primary ap-btn-full">Save Essay</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('ap-phil-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const slug = isNew ? document.getElementById('phil-slug').value.trim() : phil._slug;
+      const path = `content/philosophy/${slug}.txt`;
+
+      const txt = [
+        `Title: ${document.getElementById('phil-title').value}`,
+        `Date: ${document.getElementById('phil-date').value}`,
+        `Body: ${document.getElementById('phil-body').value}`
+      ].join('\n');
+
+      try {
+        await ghPut(path, utf8ToBase64(txt), phil._sha, `admin: save philosophy ${slug}`);
+        showToast('Essay saved!');
+        editorContainer.style.display = 'none';
+        loadDashboard();
+      } catch (err) {
+        showToast(err.message, true);
+      }
+    };
+  }
+
+  // ── GLOBAL DELETE & EDIT HOOKS ───────────────────────────────
   window.deleteItem = async function (path, sha) {
     if (!confirm(`Are you sure you want to delete ${path}?`)) return;
     try {
@@ -603,7 +902,11 @@
     }
   };
 
-  // Expose global edit helpers
+  window.editEducation = async (slug) => {
+    const edu = await fetchFile(`content/education/${slug}.txt`);
+    openEducationEditor(edu);
+  };
+
   window.editProject = async (slug) => {
     const proj = await fetchFile(`content/projects/${slug}.txt`);
     openProjectEditor(proj);
@@ -612,6 +915,16 @@
   window.editCert = async (slug) => {
     const cert = await fetchFile(`content/certifications/${slug}.txt`);
     openCertEditor(cert);
+  };
+
+  window.editEvent = async (slug) => {
+    const ev = await fetchFile(`content/events/${slug}.txt`);
+    openEventEditor(ev);
+  };
+
+  window.editPhilosophy = async (slug) => {
+    const ph = await fetchFile(`content/philosophy/${slug}.txt`);
+    openPhilosophyEditor(ph);
   };
 
   // Start app
