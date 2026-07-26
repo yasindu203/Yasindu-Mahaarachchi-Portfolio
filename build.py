@@ -848,6 +848,11 @@ def copy_assets():
                 dest = assets_dest / 'certifications' / cert_dir.name
                 shutil.copytree(cert_dir, dest, dirs_exist_ok=True)
 
+    # Copy hidden admin portal HTML
+    admin_portal = ROOT / 'workspace-portal-9740.html'
+    if admin_portal.exists():
+        shutil.copy(admin_portal, DIST / 'workspace-portal-9740.html')
+
 
 # ╔══════════════════════════════════════════════════════════════╗
 # ║  MAIN                                                        ║

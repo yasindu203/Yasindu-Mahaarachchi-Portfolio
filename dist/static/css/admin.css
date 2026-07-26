@@ -1,0 +1,376 @@
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN PORTAL STYLES — Yasindu Mahaarachchi
+   Internal Tool Design System
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --ap-bg:          #121417;
+  --ap-surface:     #1A1D23;
+  --ap-surface-hover:#22262E;
+  --ap-border:      rgba(255, 255, 255, 0.10);
+  --ap-border-strong:rgba(255, 255, 255, 0.20);
+  --ap-text:        #EDEDED;
+  --ap-text-muted:  #9CA3AF;
+  --ap-accent:      #E0A648;
+  --ap-accent-dim:  rgba(224, 166, 72, 0.15);
+  --ap-accent-border:rgba(224, 166, 72, 0.35);
+  --ap-danger:      #EF4444;
+  --ap-danger-dim:  rgba(239, 68, 68, 0.15);
+  --ap-success:     #10B981;
+  --ap-success-dim: rgba(16, 185, 129, 0.15);
+  --ap-radius:      8px;
+  --ap-radius-lg:   12px;
+  --ap-font:        'Inter', system-ui, sans-serif;
+  --ap-mono:        'Share Tech Mono', monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--ap-font);
+  background-color: var(--ap-bg);
+  color: var(--ap-text);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--ap-accent); text-decoration: none; }
+button { font-family: var(--ap-font); cursor: pointer; }
+
+/* ── AUTH MODALS ─────────────────────────────────────────────── */
+.ap-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.ap-auth-box {
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-border-strong);
+  border-radius: var(--ap-radius-lg);
+  padding: 36px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.ap-auth-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ap-accent);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ap-auth-sub {
+  font-size: 0.875rem;
+  color: var(--ap-text-muted);
+  margin-bottom: 24px;
+}
+
+/* ── FORM ELEMENTS ───────────────────────────────────────────── */
+.ap-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.ap-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ap-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ap-input,
+.ap-textarea,
+.ap-select {
+  font-family: var(--ap-font);
+  font-size: 0.9rem;
+  color: var(--ap-text);
+  background: var(--ap-bg);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius);
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 200ms;
+  width: 100%;
+}
+
+.ap-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+.ap-input:focus,
+.ap-textarea:focus,
+.ap-select:focus {
+  border-color: var(--ap-accent);
+  box-shadow: 0 0 0 2px var(--ap-accent-dim);
+}
+
+.ap-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--ap-radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 200ms;
+  white-space: nowrap;
+}
+
+.ap-btn-primary {
+  background: var(--ap-accent);
+  color: #121417;
+}
+.ap-btn-primary:hover {
+  background: #E8B45B;
+}
+
+.ap-btn-secondary {
+  background: var(--ap-surface-hover);
+  color: var(--ap-text);
+  border-color: var(--ap-border);
+}
+.ap-btn-secondary:hover {
+  border-color: var(--ap-border-strong);
+  background: #2D333E;
+}
+
+.ap-btn-danger {
+  background: var(--ap-danger-dim);
+  color: var(--ap-danger);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.ap-btn-danger:hover {
+  background: var(--ap-danger);
+  color: #fff;
+}
+
+.ap-btn-full { width: 100%; }
+
+/* ── LAYOUT & HEADER ─────────────────────────────────────────── */
+.ap-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.ap-header {
+  height: 64px;
+  background: var(--ap-surface);
+  border-bottom: 1px solid var(--ap-border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 500;
+}
+
+.ap-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ap-accent);
+}
+
+.ap-brand-badge {
+  font-family: var(--ap-mono);
+  font-size: 0.7rem;
+  background: var(--ap-accent-dim);
+  color: var(--ap-accent);
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid var(--ap-accent-border);
+}
+
+.ap-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── MAIN CONTAINER ──────────────────────────────────────────── */
+.ap-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  width: 100%;
+}
+
+.ap-notice {
+  background: var(--ap-accent-dim);
+  border: 1px solid var(--ap-accent-border);
+  color: var(--ap-accent);
+  padding: 12px 18px;
+  border-radius: var(--ap-radius);
+  font-size: 0.85rem;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── DASHBOARD GRID ──────────────────────────────────────────── */
+.ap-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.ap-dash-card {
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ap-dash-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ap-border);
+}
+
+.ap-dash-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ap-dash-card-count {
+  font-family: var(--ap-mono);
+  font-size: 0.8rem;
+  color: var(--ap-text-muted);
+  background: var(--ap-bg);
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+.ap-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.ap-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--ap-bg);
+  border-radius: var(--ap-radius);
+  font-size: 0.85rem;
+}
+
+.ap-item-name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.ap-item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ap-btn-icon {
+  background: none;
+  border: none;
+  color: var(--ap-text-muted);
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 150ms, background 150ms;
+}
+.ap-btn-icon:hover {
+  color: var(--ap-accent);
+  background: var(--ap-accent-dim);
+}
+.ap-btn-icon.danger:hover {
+  color: var(--ap-danger);
+  background: var(--ap-danger-dim);
+}
+
+/* ── EDIT FORM MODAL / PANEL ─────────────────────────────────── */
+.ap-editor-panel {
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-border);
+  border-radius: var(--ap-radius-lg);
+  padding: 28px;
+  margin-top: 24px;
+}
+
+.ap-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ap-border);
+}
+
+.ap-editor-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ap-accent);
+}
+
+/* ── STATUS TOAST ────────────────────────────────────────────── */
+.ap-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--ap-surface);
+  border: 1px solid var(--ap-accent);
+  color: var(--ap-text);
+  padding: 14px 20px;
+  border-radius: var(--ap-radius);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
