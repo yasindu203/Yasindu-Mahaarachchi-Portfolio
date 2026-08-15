@@ -3,5 +3,5 @@ Issuer: Microsoft
 Platform: Microsoft
 Description: In Progress.
 Verify: 
-Logo: 
+Logo: microsoft.png
 Order: 6
