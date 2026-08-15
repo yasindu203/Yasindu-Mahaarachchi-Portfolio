@@ -3,5 +3,5 @@ Issuer: SAP
 Platform: SAP
 Description: In Progress.
 Verify: 
-Logo: 
+Logo: sap.png
 Order: 5

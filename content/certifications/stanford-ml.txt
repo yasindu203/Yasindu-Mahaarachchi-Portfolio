@@ -3,5 +3,5 @@ Issuer: DeepLearning.AI & Stanford University
 Platform: Coursera
 Description: In Progress.
 Verify: 
-Logo: 
+Logo: stanford.png
 Order: 4
