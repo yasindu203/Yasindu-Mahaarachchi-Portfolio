@@ -322,6 +322,22 @@ def gen_projects(projects: list) -> str:
         if proj.get('metric'):
             metric_html = f'<p class="project-metric">→ {h(proj["metric"])}</p>'
 
+        article_html = ''
+        if proj.get('article'):
+            modal_id = f"modal-{h(slug)}"
+            article_html = f"""
+            <button class="read-article-btn" onclick="document.getElementById('{modal_id}').showModal()">Read Full Article</button>
+            <dialog id="{modal_id}" class="article-modal">
+              <div class="modal-header">
+                <h3>{h(proj.get("title", ""))}</h3>
+                <button class="close-modal-btn" onclick="this.closest('dialog').close()">×</button>
+              </div>
+              <div class="modal-body">
+                {proj["article"]}
+              </div>
+            </dialog>
+            """
+
         cards += f"""
       <div class="project-card" id="project-{h(slug)}">
         {screenshot_html}
@@ -332,7 +348,7 @@ def gen_projects(projects: list) -> str:
           </div>
           {tag_pills(proj.get("tags", ""))}
           <p class="project-desc">{h(proj.get("description", ""))}</p>
-          {f'<div class="project-article" style="margin-top: 15px;">{proj.get("article", "")}</div>' if proj.get("article") else ""}
+          {article_html}
           {metric_html}
           {links_html}
         </div>

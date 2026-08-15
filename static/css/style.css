@@ -1512,3 +1512,84 @@ body.dark .badge-reading {
   .hero-name { font-size: 2rem; }
   .dark-tab { padding: 7px 10px; font-size: 0.75rem; }
 }
+
+/* Modal Styles */
+.read-article-btn {
+  margin-top: 15px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.read-article-btn:hover {
+  background: var(--accent);
+  color: var(--bg-main);
+}
+
+.article-modal {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.article-modal::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-main);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-modal-btn:hover {
+  color: var(--accent);
+}
+
+.modal-body {
+  padding: 25px;
+  overflow-y: auto;
+  max-height: calc(90vh - 80px);
+  font-family: 'Work Sans', sans-serif;
+  line-height: 1.7;
+}
+
+.modal-body p {
+  margin-bottom: 15px;
+}
