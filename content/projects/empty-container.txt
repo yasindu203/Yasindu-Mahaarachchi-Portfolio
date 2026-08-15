@@ -1,4 +1,5 @@
 Title: Empty Container Optimization Model
-Company: Ongoing Project
-Period: Ongoing
+Tags: Supply Chain, Operations Research, Logistics Engineering
 Description: Designing a model to minimize repositioning costs and maximize container fleet utilization across supply chain networks.
+Status: Ongoing
+Order: 3
