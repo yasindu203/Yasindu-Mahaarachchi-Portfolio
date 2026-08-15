@@ -1,7 +1,7 @@
-Title: Fundamentals of Accelerated Data Science
+Title: Certificate Course in Fundamentals of Accelerated Data Science
 Issuer: NVIDIA
 Platform: NVIDIA Deep Learning Institute
 Description: Completed 2025. Covers GPU-accelerated data processing with RAPIDS cuDF, cuML, and CuPy. Hands-on training in end-to-end accelerated data science workflows for large-scale datasets.
 Verify: https://learn.nvidia.com/certificates
 Logo: nvidia.png
-Order: 3
+Order: 2

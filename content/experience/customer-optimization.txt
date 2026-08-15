@@ -1,0 +1,4 @@
+Title: Customer Optimization System
+Company: Geethani Motors
+Period: Completed
+Description: Streamlined service delivery by developing a data-driven customer optimization system.

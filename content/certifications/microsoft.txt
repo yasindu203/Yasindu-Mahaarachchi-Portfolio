@@ -1,0 +1,7 @@
+Title: Power BI Data Analyst
+Issuer: Microsoft
+Platform: Microsoft
+Description: In Progress.
+Verify: 
+Logo: 
+Order: 6

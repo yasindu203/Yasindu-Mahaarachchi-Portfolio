@@ -1,7 +1,7 @@
-Title: McKinsey Forward Program
+Title: Forward Learners
 Issuer: McKinsey & Company
 Platform: McKinsey Forward
-Description: Completed June 2026. A selective professional development programme covering leadership, problem-solving frameworks, and digital fluency. Digital badge awarded upon completion.
+Description: Completed 2026. A selective professional development programme covering leadership, problem-solving frameworks, and digital fluency. Digital badge awarded upon completion.
 Verify: https://www.mckinsey.com/forward
 Logo: mckinsey.png
-Order: 1
+Order: 3

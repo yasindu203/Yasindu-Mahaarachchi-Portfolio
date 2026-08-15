@@ -1,7 +1,0 @@
-Title: Certificate Course in Machine Learning Fundamentals
-Issuer: Sri Lanka Institute of Information Technology (SLIIT)
-Platform: SLIIT
-Description: Currently enrolled. Covers supervised and unsupervised learning, model evaluation, feature engineering, and practical implementation using Python-based ML frameworks.
-Verify:
-Logo: sliit.png
-Order: 2

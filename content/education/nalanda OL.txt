@@ -1,5 +1,5 @@
 Institution: Nalanda College, Colombo 10
-Degree: GCE Ordinary Level
+Degree: G.C.E. Ordinary Level
 Period: 2014 - 2019
-Detail: Results : 8 As, 1 B(Sinhala)
+Detail: 8 As , 1 B
 Order: 3
