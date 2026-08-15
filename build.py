@@ -653,7 +653,7 @@ def build_project_page_html(proj: dict, identity: dict) -> str:
   <meta name="theme-color" content="#F7F3EC" />
   <link rel="icon" type="image/png" href="static/assets/favicon.png" />
   <link rel="stylesheet" href="static/css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300..700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
 </head>
 <body class="light">
   <div class="light-mode-content">
@@ -661,7 +661,7 @@ def build_project_page_html(proj: dict, identity: dict) -> str:
       <div class="nav-inner">
         <a class="nav-logo" href="index.html">
           <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
-          <span>← Back to Portfolio</span>
+          <span>{h(name)}</span>
         </a>
       </div>
     </nav>
@@ -733,7 +733,7 @@ def build_html(identity, education, experience, projects,
   <link rel="apple-touch-icon" href="static/assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300..700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="static/css/style.css" />
 </head>
 <body class="light">
