@@ -146,7 +146,6 @@ def gen_hero(identity: dict) -> str:
       <p class="hero-eyebrow">Hello, I'm</p>
       <h1 class="hero-name">{h(name)}</h1>
       <p class="hero-tagline">{h(tagline)}</p>
-      <p class="hero-bio">{h(bio)}</p>
       <div class="hero-actions">
         <a href="{h(cv)}" class="btn btn-primary" id="hero-cv-btn">⬇ Download CV</a>
         <a href="#contact" class="btn btn-outline" id="hero-contact-btn">✉ Get in Touch</a>
