@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Geethani Motors Project - Yasindu Mahaarachchi</title>
+  <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
+</head>
+<body class="light">
+  <div class="light-mode-content">
+    <nav class="site-nav" role="navigation">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
+          <span>Yasindu Mahaarachchi</span>
+        </a>
+      </div>
+    </nav>
+    <main style="padding: 120px 20px 60px; max-width: 800px; margin: 0 auto; min-height: 100vh;">
+      <article class="project-article-page">
+        <header style="margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+          <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); margin-bottom: 10px;">The Geethani Motors Project</h1>
+          <p style="color: var(--text-muted); font-size: 1.1rem; font-family: 'Work Sans', sans-serif;">Digitized the supply chain information flow for a local vehicle parts supplier to reduce inventory wastage and out-of-stock scenarios.</p>
+        </header>
+        <div class="article-body" style="font-family: 'Work Sans', sans-serif; line-height: 1.7; color: var(--text-main);">
+          <h3 style="margin-bottom: 10px; color: var(--accent);">The Geethani Motors Project</h3>
+<p>When you think of the automotive spare parts industry, you probably picture grease, gears, and gasoline. But behind the scenes, the real engine driving the industry is information flow. Recently, my team and I tackled a massive supply chain bottleneck for Geethani Motors, a local supplier specializing in rubber and metal vehicle seals.</p>
+<p>What started as an academic deep-dive into SME logistics quickly turned into a real-world engineering challenge. We discovered a system bogged down by rigid constraints, manual processes, and a surprising amount of waste. Here is how we engineered a turnaround.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/meeting.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Team Meeting">
+  <img src="assets/projects/geethani-motors/warehouse.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Warehouse Elevator">
+  <img src="assets/projects/geethani-motors/warehouse2.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Warehouse Racks">
+  <img src="assets/projects/geethani-motors/dashboard2.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 2">
+</div>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">The 10,000-Unit Headache</h4>
+<p>Geethani Motors was facing a classic supply chain trap. Rubber seals have a finite shelf life. If they sit in a warehouse too long, they degrade. Yet, Geethani was experiencing a frustrating 10% inventory wastage rate.</p>
+<p>Why? It came down to a lack of negotiation power and poor forecasting. International manufacturers were enforcing strict Minimum Order Quantities (MOQs) of 10,000 units. If Geethani only needed 3,000 parts to meet local demand, they still had to buy 10,000. Coupled with a basic static-buffer reordering system, they were practically drowning in excess stock.</p>
+<p>Worse still, there was a massive disconnect in the downstream distribution chain. B2B retailers were placing orders blindly, completely unaware of Geethani’s actual stock levels. This information asymmetry led to constant out-of-stock scenarios, unfulfilled orders, and heavy opportunity costs.</p>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">Building the Solution: A Tale of Two Dashboards</h4>
+<p>To bridge this gap, we knew we had to digitize their information flow without completely upending the internal processes their inventory managers were comfortable with. We designed a dual-dashboard system to bring real-time visibility to both sides of the supply chain.</p>
+
+<h5 style="margin-top: 10px; color: var(--text-main);">1. The Retailer B2B Portal (The External Dashboard)</h5>
+<p>We built a lightweight, no-nonsense web portal for Geethani’s network of resellers. Instead of a clunky login process, verified retailers simply enter their Retailer Identification Number (RIN).</p>
+<p>Once inside, they have instant, real-time visibility into the live stock of critical components—from Hiace rear hub seals to Tractor engine seals. Retailers can check exact quantities, input their desired order, and hit submit. No more guessing games, and no more lost sales from ordering out-of-stock items.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/dashboard3.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 3">
+  <img src="assets/projects/geethani-motors/dashboard4.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 4">
+</div>
+
+<h5 style="margin-top: 10px; color: var(--text-main);">2. The Master Inventory Tracker (The Internal Dashboard)</h5>
+<p>On the flip side, we needed a robust backend for Geethani’s team. When a retailer hits "Submit" on the frontend, it instantly triggers an automated alert to the inventory manager and logs the request in a centralized master database.</p>
+<p>This internal dashboard tracks the entire lifecycle of the order through a visual pipeline: Pending → Packed → Shipped. Once dispatched, courier and tracking details are logged. Crucially, we designed this system to assist, rather than replace, the inventory manager. Order quantities aren't blindly deducted by the algorithm; the manager retains manual control over the master stock deductions, ensuring the digital numbers always match the physical warehouse reality.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/dashboard1.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 1">
+</div>
+        </div>
+      </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <p class="footer-copy">© 2026 Yasindu Mahaarachchi.</p>
+        <div class="footer-links"><a href="#">Back to top ↑</a></div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
