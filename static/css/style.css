@@ -1513,83 +1513,24 @@ body.dark .badge-reading {
   .dark-tab { padding: 7px 10px; font-size: 0.75rem; }
 }
 
-/* Modal Styles */
+/* Read Article Button */
 .read-article-btn {
+  display: inline-block;
   margin-top: 15px;
-  background: transparent;
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--bg-main);
   border: 1px solid var(--accent);
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 4px;
   font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
   transition: all 0.2s ease;
 }
 
 .read-article-btn:hover {
-  background: var(--accent);
-  color: var(--bg-main);
-}
-
-.article-modal {
-  border: none;
-  border-radius: 8px;
-  padding: 0;
-  max-width: 800px;
-  width: 90%;
-  max-height: 90vh;
-  background: var(--bg-card);
-  color: var(--text-main);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.article-modal::backdrop {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 25px;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--bg-main);
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
+  background: transparent;
   color: var(--accent);
-}
-
-.close-modal-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--text-muted);
-  transition: color 0.2s;
-  padding: 0;
-  line-height: 1;
-}
-
-.close-modal-btn:hover {
-  color: var(--accent);
-}
-
-.modal-body {
-  padding: 25px;
-  overflow-y: auto;
-  max-height: calc(90vh - 80px);
-  font-family: 'Work Sans', sans-serif;
-  line-height: 1.7;
-}
-
-.modal-body p {
-  margin-bottom: 15px;
 }

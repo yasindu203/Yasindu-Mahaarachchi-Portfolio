@@ -324,18 +324,9 @@ def gen_projects(projects: list) -> str:
 
         article_html = ''
         if proj.get('article'):
-            modal_id = f"modal-{h(slug)}"
+            article_url = f"project-{slug}.html"
             article_html = f"""
-            <button class="read-article-btn" onclick="document.getElementById('{modal_id}').showModal()">Read Full Article</button>
-            <dialog id="{modal_id}" class="article-modal">
-              <div class="modal-header">
-                <h3>{h(proj.get("title", ""))}</h3>
-                <button class="close-modal-btn" onclick="this.closest('dialog').close()">×</button>
-              </div>
-              <div class="modal-body">
-                {proj["article"]}
-              </div>
-            </dialog>
+            <a href="{article_url}" class="read-article-btn" style="display: inline-block; text-decoration: none; text-align: center;">Read Full Article</a>
             """
 
         cards += f"""
@@ -651,6 +642,51 @@ def gen_dark_articles(articles: list) -> str:
     return f'<div class="dark-articles">{cards}</div>'
 
 
+def build_project_page_html(proj: dict, identity: dict) -> str:
+    name = identity.get('name', 'Yasindu Mahaarachchi')
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{h(proj.get("title", ""))} - {h(name)}</title>
+  <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,300..800;1,300..800&family=Inter:wght@300..700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+</head>
+<body class="light">
+  <div class="light-mode-content">
+    <nav class="site-nav" role="navigation">
+      <div class="nav-inner">
+        <a class="nav-logo" href="index.html">
+          <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
+          <span>← Back to Portfolio</span>
+        </a>
+      </div>
+    </nav>
+    <main style="padding: 120px 20px 60px; max-width: 800px; margin: 0 auto; min-height: 100vh;">
+      <article class="project-article-page">
+        <header style="margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+          <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); margin-bottom: 10px;">{h(proj.get("title", ""))}</h1>
+          <p style="color: var(--text-muted); font-size: 1.1rem; font-family: 'Work Sans', sans-serif;">{h(proj.get("description", ""))}</p>
+        </header>
+        <div class="article-body" style="font-family: 'Work Sans', sans-serif; line-height: 1.7; color: var(--text-main);">
+          {proj.get("article", "")}
+        </div>
+      </article>
+    </main>
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <p class="footer-copy">© {datetime.now().year} {h(name)}.</p>
+        <div class="footer-links"><a href="#">Back to top ↑</a></div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>"""
+
+
 # ╔══════════════════════════════════════════════════════════════╗
 # ║  PAGE ASSEMBLY                                               ║
 # ╚══════════════════════════════════════════════════════════════╝
@@ -906,11 +942,20 @@ def main():
         CONTENT / 'journeys'
     )
 
-    # Write output
+    # Write main output
     DIST.mkdir(exist_ok=True)
     out_path = DIST / 'index.html'
     out_path.write_text(html_out, encoding='utf-8')
     print(f'  ✓ Generated {out_path}  ({len(html_out):,} bytes)')
+
+    # Generate project article pages
+    for proj in projects:
+        if proj.get('article'):
+            slug = proj.get('_slug', '')
+            p_html = build_project_page_html(proj, identity)
+            p_out = DIST / f'project-{slug}.html'
+            p_out.write_text(p_html, encoding='utf-8')
+            print(f'  ✓ Generated project page: {p_out.name}')
 
     # Copy assets
     copy_assets()
