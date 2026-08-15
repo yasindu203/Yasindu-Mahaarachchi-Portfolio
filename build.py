@@ -332,6 +332,7 @@ def gen_projects(projects: list) -> str:
           </div>
           {tag_pills(proj.get("tags", ""))}
           <p class="project-desc">{h(proj.get("description", ""))}</p>
+          {f'<div class="project-article" style="margin-top: 15px;">{proj.get("article", "")}</div>' if proj.get("article") else ""}
           {metric_html}
           {links_html}
         </div>
