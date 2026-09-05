@@ -148,6 +148,21 @@
         '',
       ];
     },
+    email: function() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(SITE_DATA.email);
+        return [
+          '<span class="t-accent">// Email</span>',
+          '  ' + SITE_DATA.email + '  <span class="t-accent" style="color:#10B981;">[COPIED TO CLIPBOARD]</span>',
+          '',
+        ];
+      }
+      return [
+        '<span class="t-accent">// Email</span>',
+        '  ' + SITE_DATA.email,
+        '',
+      ];
+    },
     github: function() {
       window.open(SITE_DATA.github, '_blank', 'noopener');
       return ['<span class="t-muted">Opening GitHub profile…</span>'];

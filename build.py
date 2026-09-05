@@ -905,11 +905,14 @@ def build_html(identity, education, experience, projects,
   .yy-light {{ fill: var(--bg);   }}
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="static/js/toggle.js"></script>
 <script src="static/js/tabs.js"></script>
 <script src="static/js/motion.js"></script>
 <script src="static/js/command-palette.js"></script>
 <script src="static/js/terminal.js"></script>
+<script src="static/js/horizontal-scroll.js"></script>
 </body>
 </html>"""
 
