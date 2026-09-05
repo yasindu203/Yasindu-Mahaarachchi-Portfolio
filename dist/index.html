@@ -71,17 +71,21 @@
       <h1 class="hero-name">Yasindu Mahaarachchi</h1>
       <p class="hero-tagline">Engineering Undergraduate | CIMA Student | Consulting &amp; Supply Chain Aspirant</p>
       <div class="hero-actions">
-        <a href="static/assets/cv.pdf" class="btn btn-primary" id="hero-cv-btn">⬇ Download CV</a>
-        <a href="#contact" class="btn btn-outline" id="hero-contact-btn">✉ Get in Touch</a>
+        <a href="static/assets/cv.pdf" class="btn btn-primary" id="hero-cv-btn" data-magnetic data-magnetic-strength="5">⬇ Download CV</a>
+        <a href="#contact" class="btn btn-outline" id="hero-contact-btn" data-magnetic data-magnetic-strength="5">✉ Get in Touch</a>
       </div>
       <div class="hero-socials" aria-label="Social links"><a href="mailto:yasindunavanga4970@gmail.com" class="social-link" title="Email" aria-label="Email">✉</a><a href="https://linkedin.com/in/yasindumahaarachchi" target="_blank" rel="noopener" class="social-link" title="LinkedIn" aria-label="LinkedIn">in</a><a href="https://github.com/yasindumahaarachchi" target="_blank" rel="noopener" class="social-link" title="GitHub" aria-label="GitHub">&#9679;</a></div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="hero-scroll-arrow">↓</span>
+        <span>scroll to explore</span>
+      </div>
     </div>
     <div class="hero-photo-wrap">
-      <img src="static/assets/profile.jpg" alt="Portrait of Yasindu Mahaarachchi" class="hero-photo" width="420" height="525" />
+      <img src="static/assets/profile.jpg" alt="Portrait of Yasindu Mahaarachchi" class="hero-photo" width="420" height="525" loading="eager" />
     </div>
   </section>
 
-  <section class="section" id="about" aria-label="About Me">
+  <section class="section" id="about" aria-label="About Me" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">About Me</h2>
       <div class="about-grid">
@@ -99,7 +103,7 @@
     </div>
   </section>
 
-  <section class="section" id="education" aria-label="Educational Qualifications">
+  <section class="section" id="education" aria-label="Educational Qualifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Educational Qualifications</h2>
       <div class="timeline">
@@ -150,7 +154,7 @@
     </div>
   </section>
 
-  <section class="section" id="professional" aria-label="Professional Qualifications">
+  <section class="section" id="professional" aria-label="Professional Qualifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Professional Qualifications</h2>
       <div class="qual-card">
@@ -180,7 +184,7 @@
     </div>
   </section>
 
-  <section class="section" id="experience" aria-label="Experience">
+  <section class="section" id="experience" aria-label="Experience" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Experience</h2>
       <div class="timeline">
@@ -198,22 +202,22 @@
     </div>
   </section>
 
-  <section class="section" id="skills" aria-label="Skills">
+  <section class="section" id="skills" aria-label="Skills" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Skills</h2>
       <div class="skills-grid"><span class="skill-pill">Operations Research</span><span class="skill-pill">Quantitative Methods</span><span class="skill-pill">Data Analysis</span><span class="skill-pill">Advanced Excel</span><span class="skill-pill">Python</span><span class="skill-pill">Java</span><span class="skill-pill">R</span><span class="skill-pill">C#</span><span class="skill-pill">Video Editing</span></div>
     </div>
   </section>
 
-  <section class="section" id="projects" aria-label="Projects">
+  <section class="section" id="projects" aria-label="Projects" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">
+      <div class="projects-grid" data-stagger data-stagger-delay="80">
       <div class="project-card" id="project-ran-aruna">
         <img src="assets/projects/ran-aruna/logo.png" alt="Project Ran Aruna - Home Garden Initiative screenshot" class="project-screenshot" />
         <div class="project-body">
           <div class="project-header">
-            <h3 class="project-title">Project Ran Aruna - Home Garden Initiative</h3>
+            <h3 class="project-title">Project Ran Aruna - Home Garden Initiative <span class="project-title-arrow" aria-hidden="true">↗</span></h3>
             <span class="badge badge-completed">Completed</span>
           </div>
           <div class="pills"><span class="pill">Leadership</span><span class="pill">Community Development</span><span class="pill">Agriculture</span><span class="pill">Project Management</span><span class="pill">Budgeting</span></div>
@@ -229,7 +233,7 @@
         <img src="assets/projects/geethani-motors/dashboard2.png" alt="The Geethani Motors Project screenshot" class="project-screenshot" />
         <div class="project-body">
           <div class="project-header">
-            <h3 class="project-title">The Geethani Motors Project</h3>
+            <h3 class="project-title">The Geethani Motors Project <span class="project-title-arrow" aria-hidden="true">↗</span></h3>
             <span class="badge badge-completed">Completed</span>
           </div>
           <div class="pills"><span class="pill">Supply Chain</span><span class="pill">Inventory Management</span><span class="pill">Logistics</span><span class="pill">B2B</span><span class="pill">SME</span></div>
@@ -245,7 +249,7 @@
         
         <div class="project-body">
           <div class="project-header">
-            <h3 class="project-title">Empty Container Optimization Model</h3>
+            <h3 class="project-title">Empty Container Optimization Model <span class="project-title-arrow" aria-hidden="true">↗</span></h3>
             <span class="badge badge-ongoing">Ongoing</span>
           </div>
           <div class="pills"><span class="pill">Supply Chain</span><span class="pill">Operations Research</span><span class="pill">Logistics Engineering</span></div>
@@ -259,7 +263,7 @@
         
         <div class="project-body">
           <div class="project-header">
-            <h3 class="project-title">Algorithmic Analytics &amp; Automation Project</h3>
+            <h3 class="project-title">Algorithmic Analytics &amp; Automation Project <span class="project-title-arrow" aria-hidden="true">↗</span></h3>
             <span class="badge badge-completed">Completed</span>
           </div>
           <div class="pills"><span class="pill">Python</span><span class="pill">Statistics</span><span class="pill">API Integration</span><span class="pill">Automation</span><span class="pill">Quantitative Finance</span></div>
@@ -272,10 +276,10 @@
     </div>
   </section>
 
-  <section class="section" id="certifications" aria-label="Certifications">
+  <section class="section" id="certifications" aria-label="Certifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Certifications &amp; Licensing</h2>
-      <div class="certs-grid">
+      <div class="certs-grid" data-stagger data-stagger-delay="70">
       <div class="cert-card" id="cert-cima">
         <div class="cert-logo-wrap"><img src="assets/logos/cima.png" alt="CIMA – UK logo" class="cert-logo" onerror="this.style.display='none'" /></div>
         <div class="cert-body">
@@ -334,10 +338,10 @@
   </section>
 
 
-  <section class="section" id="leadership" aria-label="Leadership and Volunteering">
+  <section class="section" id="leadership" aria-label="Leadership and Volunteering" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Leadership &amp; Volunteering</h2>
-      <div class="leadership-grid">
+      <div class="leadership-grid" data-stagger data-stagger-delay="60">
       <div class="leadership-item">
         <div class="leadership-role">
           <h3 class="leadership-org">IEEE Student Branch — University of Moratuwa</h3>
@@ -381,7 +385,7 @@
     </div>
   </section>
 
-  <section class="section" id="contact" aria-label="Contact">
+  <section class="section" id="contact" aria-label="Contact" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Get in Touch</h2>
       <div class="contact-grid">
@@ -406,7 +410,7 @@
                         placeholder="Your message…" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full"
-                    id="contact-submit">Send Message →</button>
+                    id="contact-submit" data-magnetic data-magnetic-strength="4">Send Message →</button>
           </form>
         </div>
         <div class="contact-info">
@@ -441,7 +445,15 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <p class="footer-copy">© 2026 Yasindu Mahaarachchi.</p>
-      <div class="footer-links"><a href="#hero">Back to top ↑</a></div>
+      <div class="footer-links" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <span class="footer-cmd-hint" title="Open command palette">
+          <kbd>⌘</kbd><kbd>K</kbd> <span>Command Palette</span>
+        </span>
+        <button class="footer-terminal-btn" onclick="openTerminal && openTerminal()" title="Open terminal (or press /)">
+          <span aria-hidden="true">&gt;_</span> Terminal
+        </button>
+        <a href="#hero">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
@@ -541,5 +553,8 @@
 
 <script src="static/js/toggle.js"></script>
 <script src="static/js/tabs.js"></script>
+<script src="static/js/motion.js"></script>
+<script src="static/js/command-palette.js"></script>
+<script src="static/js/terminal.js"></script>
 </body>
 </html>

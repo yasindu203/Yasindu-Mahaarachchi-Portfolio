@@ -147,13 +147,17 @@ def gen_hero(identity: dict) -> str:
       <h1 class="hero-name">{h(name)}</h1>
       <p class="hero-tagline">{h(tagline)}</p>
       <div class="hero-actions">
-        <a href="{h(cv)}" class="btn btn-primary" id="hero-cv-btn">⬇ Download CV</a>
-        <a href="#contact" class="btn btn-outline" id="hero-contact-btn">✉ Get in Touch</a>
+        <a href="{h(cv)}" class="btn btn-primary" id="hero-cv-btn" data-magnetic data-magnetic-strength="5">⬇ Download CV</a>
+        <a href="#contact" class="btn btn-outline" id="hero-contact-btn" data-magnetic data-magnetic-strength="5">✉ Get in Touch</a>
       </div>
       <div class="hero-socials" aria-label="Social links">{socials}</div>
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span class="hero-scroll-arrow">↓</span>
+        <span>scroll to explore</span>
+      </div>
     </div>
     <div class="hero-photo-wrap">
-      <img src="{h(photo)}" alt="Portrait of {h(name)}" class="hero-photo" width="420" height="525" />
+      <img src="{h(photo)}" alt="Portrait of {h(name)}" class="hero-photo" width="420" height="525" loading="eager" />
     </div>
   </section>"""
 
@@ -178,7 +182,7 @@ def gen_about(identity: dict) -> str:
         </div>'''
 
     return f"""
-  <section class="section" id="about" aria-label="About Me">
+  <section class="section" id="about" aria-label="About Me" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">About Me</h2>
       <div class="about-grid">
@@ -207,7 +211,7 @@ def gen_education(education: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="education" aria-label="Educational Qualifications">
+  <section class="section" id="education" aria-label="Educational Qualifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Educational Qualifications</h2>
       <div class="timeline">{items}</div>
@@ -217,7 +221,7 @@ def gen_education(education: list) -> str:
 
 def gen_professional_quals() -> str:
     return """
-  <section class="section" id="professional" aria-label="Professional Qualifications">
+  <section class="section" id="professional" aria-label="Professional Qualifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Professional Qualifications</h2>
       <div class="qual-card">
@@ -269,7 +273,7 @@ def gen_experience(experience: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="experience" aria-label="Experience">
+  <section class="section" id="experience" aria-label="Experience" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Experience</h2>
       <div class="timeline">{items}</div>
@@ -286,7 +290,7 @@ def gen_skills(identity: dict) -> str:
         for s in skills_str.split(',') if s.strip()
     )
     return f"""
-  <section class="section" id="skills" aria-label="Skills">
+  <section class="section" id="skills" aria-label="Skills" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Skills</h2>
       <div class="skills-grid">{pills}</div>
@@ -333,7 +337,7 @@ def gen_projects(projects: list) -> str:
         {screenshot_html}
         <div class="project-body">
           <div class="project-header">
-            <h3 class="project-title">{h(proj.get("title", ""))}</h3>
+            <h3 class="project-title">{h(proj.get("title", ""))} <span class="project-title-arrow" aria-hidden="true">↗</span></h3>
             <span class="badge {badge}">{h(status)}</span>
           </div>
           {tag_pills(proj.get("tags", ""))}
@@ -345,10 +349,10 @@ def gen_projects(projects: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="projects" aria-label="Projects">
+  <section class="section" id="projects" aria-label="Projects" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">{cards}</div>
+      <div class="projects-grid" data-stagger data-stagger-delay="80">{cards}</div>
     </div>
   </section>"""
 
@@ -387,10 +391,10 @@ def gen_certifications(certifications: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="certifications" aria-label="Certifications">
+  <section class="section" id="certifications" aria-label="Certifications" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Certifications &amp; Licensing</h2>
-      <div class="certs-grid">{cards}</div>
+      <div class="certs-grid" data-stagger data-stagger-delay="70">{cards}</div>
     </div>
   </section>"""
 
@@ -436,7 +440,7 @@ def gen_events(events: list) -> str:
     )
 
     return f"""
-  <section class="section" id="events" aria-label="Events">
+  <section class="section" id="events" aria-label="Events" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Events</h2>
       <div class="events-grid">{groups}</div>
@@ -460,10 +464,10 @@ def gen_leadership(leadership: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="leadership" aria-label="Leadership and Volunteering">
+  <section class="section" id="leadership" aria-label="Leadership and Volunteering" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Leadership &amp; Volunteering</h2>
-      <div class="leadership-grid">{items}</div>
+      <div class="leadership-grid" data-stagger data-stagger-delay="60">{items}</div>
     </div>
   </section>"""
 
@@ -511,7 +515,7 @@ def gen_contact(identity: dict) -> str:
         </div>'''
 
     return f"""
-  <section class="section" id="contact" aria-label="Contact">
+  <section class="section" id="contact" aria-label="Contact" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Get in Touch</h2>
       <div class="contact-grid">
@@ -536,7 +540,7 @@ def gen_contact(identity: dict) -> str:
                         placeholder="Your message…" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-full"
-                    id="contact-submit">Send Message →</button>
+                    id="contact-submit" data-magnetic data-magnetic-strength="4">Send Message →</button>
           </form>
         </div>
         <div class="contact-info">{details}</div>
@@ -649,28 +653,45 @@ def build_project_page_html(proj: dict, identity: dict) -> str:
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{h(proj.get("title", ""))} - {h(name)}</title>
+  <meta name="description" content="{h(proj.get('description', ''))}" />
   <meta name="theme-color" content="#F7F3EC" />
   <link rel="icon" type="image/png" href="static/assets/favicon.png" />
-  <link rel="stylesheet" href="static/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    .article-content {{ font-family: var(--font-body); line-height: 1.8; color: var(--text); max-width: 720px; margin: 0 auto; }}
+    .article-content p {{ margin-bottom: 1.4em; color: var(--text-muted); font-size: 1.05rem; }}
+    .article-content h2 {{ font-family: var(--font-head); font-size: 1.6rem; margin: 2em 0 0.6em; color: var(--text); }}
+    .article-content h3 {{ font-family: var(--font-head); font-size: 1.25rem; margin: 1.6em 0 0.4em; color: var(--text); }}
+    .article-content img {{ border-radius: var(--radius-lg); box-shadow: var(--shadow); margin: 2em auto; }}
+    .article-back {{ display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 32px; transition: color var(--transition-fast), gap var(--transition-fast); }}
+    .article-back:hover {{ color: var(--accent); gap: 12px; opacity: 1; }}
+    .article-hero-title {{ font-family: var(--font-head); font-size: clamp(2rem, 4vw, 3rem); color: var(--text); letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }}
+    .article-hero-desc {{ font-size: 1.1rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 0; }}
+    .article-header {{ border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 48px; }}
+  </style>
 </head>
 <body class="light">
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
   <div class="light-mode-content">
-    <nav class="site-nav" role="navigation">
+    <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
       <div class="nav-inner">
-        <a class="nav-logo" href="index.html">
+        <a class="nav-logo" href="index.html" aria-label="{h(name)} — home">
           <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
           <span>{h(name)}</span>
         </a>
       </div>
     </nav>
-    <main style="padding: 120px 20px 60px; max-width: 800px; margin: 0 auto; min-height: 100vh;">
+    <main style="padding: 48px 24px 80px; max-width: 800px; margin: 0 auto; min-height: 100vh;">
+      <a href="index.html#projects" class="article-back">← Back to Projects</a>
       <article class="project-article-page">
-        <header style="margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
-          <h1 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); margin-bottom: 10px;">{h(proj.get("title", ""))}</h1>
-          <p style="color: var(--text-muted); font-size: 1.1rem; font-family: 'Work Sans', sans-serif;">{h(proj.get("description", ""))}</p>
+        <header class="article-header">
+          <h1 class="article-hero-title">{h(proj.get("title", ""))}</h1>
+          <p class="article-hero-desc">{h(proj.get("description", ""))}</p>
         </header>
-        <div class="article-body" style="font-family: 'Work Sans', sans-serif; line-height: 1.7; color: var(--text-main);">
+        <div class="article-content">
           {proj.get("article", "")}
         </div>
       </article>
@@ -678,10 +699,25 @@ def build_project_page_html(proj: dict, identity: dict) -> str:
     <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
         <p class="footer-copy">© {datetime.now().year} {h(name)}.</p>
-        <div class="footer-links"><a href="#">Back to top ↑</a></div>
+        <div class="footer-links"><a href="index.html#projects">← Back to Projects</a></div>
       </div>
     </footer>
   </div>
+<script src="static/js/toggle.js"></script>
+<script>
+  (function() {{
+    var bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    function update() {{
+      var el = document.documentElement;
+      var scrolled = el.scrollTop || document.body.scrollTop;
+      var total = el.scrollHeight - el.clientHeight;
+      bar.style.transform = 'scaleX(' + (total > 0 ? scrolled / total : 0) + ')';
+    }}
+    window.addEventListener('scroll', update, {{ passive: true }});
+    update();
+  }})();
+</script>
 </body>
 </html>"""
 
@@ -788,7 +824,15 @@ def build_html(identity, education, experience, projects,
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <p class="footer-copy">© {year} {h(name)}.</p>
-      <div class="footer-links"><a href="#hero">Back to top ↑</a></div>
+      <div class="footer-links" style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <span class="footer-cmd-hint" title="Open command palette">
+          <kbd>⌘</kbd><kbd>K</kbd> <span>Command Palette</span>
+        </span>
+        <button class="footer-terminal-btn" onclick="openTerminal && openTerminal()" title="Open terminal (or press /)">
+          <span aria-hidden="true">&gt;_</span> Terminal
+        </button>
+        <a href="#hero">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
@@ -863,6 +907,9 @@ def build_html(identity, education, experience, projects,
 
 <script src="static/js/toggle.js"></script>
 <script src="static/js/tabs.js"></script>
+<script src="static/js/motion.js"></script>
+<script src="static/js/command-palette.js"></script>
+<script src="static/js/terminal.js"></script>
 </body>
 </html>"""
 
