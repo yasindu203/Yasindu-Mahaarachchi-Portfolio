@@ -363,38 +363,79 @@ def gen_certifications(certifications: list) -> str:
     for cert in certifications:
         slug = cert.get('_slug', '')
         logo = cert.get('logo', '').strip()
+        title = cert.get('title', '')
+        issuer = cert.get('issuer', '')
+        platform = cert.get('platform', '')
+        desc = cert.get('description', '')
+        verify = cert.get('verify', '').strip()
+
+        desc_lower = desc.lower()
+        if 'in progress' in desc_lower or 'reading' in desc_lower:
+            badge_class = 'badge-ongoing'
+            badge_text = 'In Progress'
+        else:
+            badge_class = 'badge-completed'
+            badge_text = 'Completed'
+
         logo_html = ''
         if logo:
             logo_html = (
                 f'<img src="assets/logos/{h(logo)}" '
-                f'alt="{h(cert.get("issuer", ""))} logo" '
+                f'alt="{h(issuer)} logo" '
                 f'class="cert-logo" onerror="this.style.display=\'none\'" />'
             )
 
-        verify = cert.get('verify', '').strip()
         verify_html = ''
         if verify:
-            verify_html = f'<a href="{h(verify)}" target="_blank" rel="noopener" class="verify-link">Verify ↗</a>'
+            verify_html = f'<a href="{h(verify)}" target="_blank" rel="noopener" class="cert-verify-btn">Verify Credential ↗</a>'
 
-        issuer   = cert.get('issuer', '')
-        platform = cert.get('platform', '')
         issuer_line = ' · '.join(filter(None, [issuer, platform]))
 
         cards += f"""
       <div class="cert-card" id="cert-{h(slug)}">
-        <div class="cert-logo-wrap">{logo_html}</div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap">{logo_html}</div>
+          <span class="badge {badge_class}">{badge_text}</span>
+        </div>
         <div class="cert-body">
-          <h3 class="cert-title">{h(cert.get("title", ""))}</h3>
+          <h3 class="cert-title">{h(title)}</h3>
           <p class="cert-issuer">{h(issuer_line)}</p>
-          <p class="cert-desc">{h(cert.get("description", ""))}</p>
+          <p class="cert-desc">{h(desc)}</p>
           {verify_html}
         </div>
       </div>"""
 
     return f"""
-  <section class="section" id="certifications" aria-label="Certifications" data-reveal>
+  <section class="section" id="certifications" aria-label="Certifications & Licensing" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Certifications &amp; Licensing</h2>
+
+      <!-- Featured Qualification: CIMA -->
+      <div class="qual-card featured-qual-card" id="qual-cima">
+        <div class="qual-header">
+          <div class="qual-logo-wrap">
+            <img src="assets/logos/cima.png" alt="CIMA logo" class="qual-logo" onerror="this.style.display='none'" />
+          </div>
+          <div>
+            <span class="qual-badge">Global Professional Qualification</span>
+            <h3 class="qual-name">Chartered Institute of Management Accountants (CIMA – UK)</h3>
+            <p class="qual-sub">Management Accounting Qualification · 2025 – Present</p>
+          </div>
+        </div>
+        <div class="cima-progress">
+          <div class="cima-level">
+            <span class="cima-level-name">Strategic Level</span>
+            <span class="badge badge-ongoing">Currently Reading</span>
+            <span class="cima-detail">SCS — Strategic Case Study · In Progress</span>
+          </div>
+          <div class="cima-level">
+            <span class="cima-level-name">Management Level</span>
+            <span class="badge badge-completed">Completed</span>
+            <span class="cima-detail">Management Case Study · Score: 111 Marks</span>
+          </div>
+        </div>
+      </div>
+
       <div class="certs-grid" data-stagger data-stagger-delay="70">{cards}</div>
     </div>
   </section>"""
@@ -774,7 +815,6 @@ def build_html(identity, education, experience, projects,
         gen_hero(identity),
         gen_about(identity),
         gen_education(education),
-        gen_professional_quals(),
         gen_experience(experience),
         gen_skills(identity),
         gen_projects(projects),

@@ -154,36 +154,6 @@
     </div>
   </section>
 
-  <section class="section" id="professional" aria-label="Professional Qualifications" data-reveal>
-    <div class="section-inner">
-      <h2 class="section-title">Professional Qualifications</h2>
-      <div class="qual-card">
-        <div class="qual-header">
-          <img src="assets/logos/cima.png"
-               alt="CIMA logo"
-               class="qual-logo"
-               onerror="this.style.display='none'" />
-          <div>
-            <h3 class="qual-name">Chartered Institute of Management Accountants (CIMA – UK)</h3>
-            <p class="qual-sub">Management Accounting Qualification · 2025 – Present</p>
-          </div>
-        </div>
-        <div class="cima-progress">
-          <div class="cima-level">
-            <span class="cima-level-name">Strategic Level</span>
-            <span class="badge badge-ongoing">Currently Reading</span>
-            <span class="cima-detail">SCS — Strategic Case Study · In Progress</span>
-          </div>
-          <div class="cima-level">
-            <span class="cima-level-name">Management Level</span>
-            <span class="badge badge-completed">Completed</span>
-            <span class="cima-detail">Management Case Study · Score: 111 Marks</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="experience" aria-label="Experience" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Experience</h2>
@@ -276,12 +246,42 @@
     </div>
   </section>
 
-  <section class="section" id="certifications" aria-label="Certifications" data-reveal>
+  <section class="section" id="certifications" aria-label="Certifications & Licensing" data-reveal>
     <div class="section-inner">
       <h2 class="section-title">Certifications &amp; Licensing</h2>
+
+      <!-- Featured Qualification: CIMA -->
+      <div class="qual-card featured-qual-card" id="qual-cima">
+        <div class="qual-header">
+          <div class="qual-logo-wrap">
+            <img src="assets/logos/cima.png" alt="CIMA logo" class="qual-logo" onerror="this.style.display='none'" />
+          </div>
+          <div>
+            <span class="qual-badge">Global Professional Qualification</span>
+            <h3 class="qual-name">Chartered Institute of Management Accountants (CIMA – UK)</h3>
+            <p class="qual-sub">Management Accounting Qualification · 2025 – Present</p>
+          </div>
+        </div>
+        <div class="cima-progress">
+          <div class="cima-level">
+            <span class="cima-level-name">Strategic Level</span>
+            <span class="badge badge-ongoing">Currently Reading</span>
+            <span class="cima-detail">SCS — Strategic Case Study · In Progress</span>
+          </div>
+          <div class="cima-level">
+            <span class="cima-level-name">Management Level</span>
+            <span class="badge badge-completed">Completed</span>
+            <span class="cima-detail">Management Case Study · Score: 111 Marks</span>
+          </div>
+        </div>
+      </div>
+
       <div class="certs-grid" data-stagger data-stagger-delay="70">
       <div class="cert-card" id="cert-cima">
-        <div class="cert-logo-wrap"><img src="assets/logos/cima.png" alt="CIMA – UK logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/cima.png" alt="CIMA – UK logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-ongoing">In Progress</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Chartered Institute of Management Accountants</h3>
           <p class="cert-issuer">CIMA – UK · CIMA</p>
@@ -290,25 +290,34 @@
         </div>
       </div>
       <div class="cert-card" id="cert-nvidia-ads">
-        <div class="cert-logo-wrap"><img src="assets/logos/nvidia.png" alt="NVIDIA logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/nvidia.png" alt="NVIDIA logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-completed">Completed</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Certificate Course in Fundamentals of Accelerated Data Science</h3>
           <p class="cert-issuer">NVIDIA · NVIDIA Deep Learning Institute</p>
           <p class="cert-desc">Completed 2025. Covers GPU-accelerated data processing with RAPIDS cuDF, cuML, and CuPy. Hands-on training in end-to-end accelerated data science workflows for large-scale datasets.</p>
-          <a href="https://learn.nvidia.com/certificates" target="_blank" rel="noopener" class="verify-link">Verify ↗</a>
+          <a href="https://learn.nvidia.com/certificates" target="_blank" rel="noopener" class="cert-verify-btn">Verify Credential ↗</a>
         </div>
       </div>
       <div class="cert-card" id="cert-mckinsey-forward">
-        <div class="cert-logo-wrap"><img src="assets/logos/mckinsey.png" alt="McKinsey &amp; Company logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/mckinsey.png" alt="McKinsey &amp; Company logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-completed">Completed</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Forward Learners</h3>
           <p class="cert-issuer">McKinsey &amp; Company · McKinsey Forward</p>
           <p class="cert-desc">Completed 2026. A selective professional development programme covering leadership, problem-solving frameworks, and digital fluency. Digital badge awarded upon completion.</p>
-          <a href="https://www.mckinsey.com/forward" target="_blank" rel="noopener" class="verify-link">Verify ↗</a>
+          <a href="https://www.mckinsey.com/forward" target="_blank" rel="noopener" class="cert-verify-btn">Verify Credential ↗</a>
         </div>
       </div>
       <div class="cert-card" id="cert-stanford-ml">
-        <div class="cert-logo-wrap"><img src="assets/logos/stanford.png" alt="DeepLearning.AI &amp; Stanford University logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/stanford.png" alt="DeepLearning.AI &amp; Stanford University logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-ongoing">In Progress</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Machine Learning Specialization by Andrew Ng</h3>
           <p class="cert-issuer">DeepLearning.AI &amp; Stanford University · Coursera</p>
@@ -317,7 +326,10 @@
         </div>
       </div>
       <div class="cert-card" id="cert-sap">
-        <div class="cert-logo-wrap"><img src="assets/logos/sap.png" alt="SAP logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/sap.png" alt="SAP logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-ongoing">In Progress</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Implementation Consultant - End-to-End Business Processes for SAP Business Suite</h3>
           <p class="cert-issuer">SAP · SAP</p>
@@ -326,7 +338,10 @@
         </div>
       </div>
       <div class="cert-card" id="cert-microsoft">
-        <div class="cert-logo-wrap"><img src="assets/logos/microsoft.png" alt="Microsoft logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+        <div class="cert-card-top">
+          <div class="cert-logo-wrap"><img src="assets/logos/microsoft.png" alt="Microsoft logo" class="cert-logo" onerror="this.style.display='none'" /></div>
+          <span class="badge badge-ongoing">In Progress</span>
+        </div>
         <div class="cert-body">
           <h3 class="cert-title">Power BI Data Analyst</h3>
           <p class="cert-issuer">Microsoft · Microsoft</p>

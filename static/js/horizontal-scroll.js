@@ -122,110 +122,7 @@
     });
   }
 
-  /* ── Certifications sticky story ────────────────────────────── */
-  function buildCertsStory() {
-    var section = document.getElementById('certifications');
-    if (!section) return;
 
-    var cards = Array.from(section.querySelectorAll('.cert-card'));
-    if (cards.length < 2) return;
-
-    var count = cards.length;
-    resetMotion(section);
-    cards.forEach(resetMotion);
-
-    section.classList.add('cert-story-converted');
-
-    var inner = section.querySelector('.section-inner');
-    if (!inner) return;
-
-    /* Left label */
-    var label = document.createElement('div');
-    label.className = 'cert-story-label';
-
-    var eyebrow = document.createElement('span');
-    eyebrow.className = 'h-scroll-eyebrow';
-    eyebrow.textContent = 'Scroll through each';
-
-    var titleEl = document.createElement('h2');
-    titleEl.className = 'cert-story-title';
-    titleEl.textContent = 'Certifications & Licensing';
-
-    var counter = document.createElement('div');
-    counter.className = 'cert-story-counter';
-    counter.textContent = '01 / ' + pad(count);
-
-    var pwrap = document.createElement('div');
-    pwrap.className = 'cert-story-progress-wrap';
-    var pfill = document.createElement('div');
-    pfill.className = 'cert-story-progress-fill';
-    pwrap.appendChild(pfill);
-
-    label.appendChild(eyebrow);
-    label.appendChild(titleEl);
-    label.appendChild(counter);
-    label.appendChild(pwrap);
-
-    /* Right content */
-    var content = document.createElement('div');
-    content.className = 'cert-story-content';
-
-    var items = cards.map(function (card, i) {
-      var wrap = document.createElement('div');
-      wrap.className = 'cert-story-item';
-      wrap.appendChild(card);
-      content.appendChild(wrap);
-      gsap.set(wrap, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 30, position: 'absolute' });
-      return wrap;
-    });
-
-    var outer = document.createElement('div');
-    outer.className = 'cert-story-outer';
-    outer.appendChild(label);
-    outer.appendChild(content);
-
-    inner.style.cssText = 'max-width:unset;padding:0;';
-    inner.innerHTML = '';
-    inner.appendChild(outer);
-
-    var STEP_PX = 550;
-    var totalDist = count * STEP_PX;
-    var step = 1 / count;
-
-    var tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: '+=' + (totalDist + 200),
-        pin: true,
-        anticipatePin: 1,
-        scrub: 1.2,
-        invalidateOnRefresh: true,
-        onUpdate: function (self) {
-          pfill.style.transform = 'scaleX(' + self.progress + ')';
-          var idx = Math.min(Math.floor(self.progress * count), count - 1);
-          counter.textContent = pad(idx + 1) + ' / ' + pad(count);
-        }
-      }
-    });
-
-    items.forEach(function (item, i) {
-      var pos = i * step;
-      if (i > 0) {
-        tl.fromTo(item,
-          { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' },
-          pos - 0.01
-        );
-      }
-      if (i < count - 1) {
-        tl.to(item,
-          { opacity: 0, y: -22, duration: 0.2, ease: 'power2.in' },
-          pos + step - 0.25
-        );
-      }
-    });
-  }
 
   /* ── Experience featured card (1 entry) ─────────────────────── */
   function buildExperienceFeature() {
@@ -396,7 +293,6 @@
       buildExperienceFeature();
       buildHorizontal('projects',   '.project-card',    'Projects');
       buildHorizontal('leadership', '.leadership-item',  'Leadership & Volunteering');
-      buildCertsStory();
       initCopyButtons();
 
       /* Refresh after fonts + images load or theme changes */
