@@ -212,7 +212,7 @@ def gen_education(education: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="education" aria-label="Educational Qualifications" data-reveal>
+  <section class="section" id="education" aria-label="Educational Qualifications">
     <div class="section-inner">
       <h2 class="section-title">Educational Qualifications</h2>
       <div class="timeline">{items}</div>
@@ -350,10 +350,10 @@ def gen_projects(projects: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="projects" aria-label="Projects" data-reveal>
+  <section class="section" id="projects" aria-label="Projects">
     <div class="section-inner">
       <h2 class="section-title">Projects</h2>
-      <div class="projects-grid" data-stagger data-stagger-delay="80">{cards}</div>
+      <div class="projects-grid">{cards}</div>
     </div>
   </section>"""
 
@@ -406,7 +406,7 @@ def gen_certifications(certifications: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="certifications" aria-label="Certifications & Licensing" data-reveal>
+  <section class="section" id="certifications" aria-label="Certifications &amp; Licensing">
     <div class="section-inner">
       <h2 class="section-title">Certifications &amp; Licensing</h2>
 
@@ -436,7 +436,7 @@ def gen_certifications(certifications: list) -> str:
         </div>
       </div>
 
-      <div class="certs-grid" data-stagger data-stagger-delay="70">{cards}</div>
+      <div class="certs-grid">{cards}</div>
     </div>
   </section>"""
 
@@ -506,10 +506,10 @@ def gen_leadership(leadership: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="leadership" aria-label="Leadership and Volunteering" data-reveal>
+  <section class="section" id="leadership" aria-label="Leadership and Volunteering">
     <div class="section-inner">
       <h2 class="section-title">Leadership &amp; Volunteering</h2>
-      <div class="leadership-grid" data-stagger data-stagger-delay="60">{items}</div>
+      <div class="leadership-grid">{items}</div>
     </div>
   </section>"""
 
@@ -988,7 +988,7 @@ def build_html(identity, education, experience, projects,
 <script src="static/js/command-palette.js"></script>
 <script>window.__SITE_DATA__ = {site_data_json};</script>
 <script src="static/js/terminal.js"></script>
-<script src="static/js/horizontal-scroll.js"></script>
+<script src="static/js/gated-scroll.js"></script>
 </body>
 </html>"""
 
