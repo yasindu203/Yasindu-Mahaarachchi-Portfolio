@@ -399,9 +399,12 @@
       buildCertsStory();
       initCopyButtons();
 
-      /* Refresh after fonts + images load */
+      /* Refresh after fonts + images load or theme changes */
       window.addEventListener('load', function () {
         ScrollTrigger.refresh();
+      });
+      document.addEventListener('themeChange', function () {
+        setTimeout(function() { ScrollTrigger.refresh(); }, 100);
       });
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function () { ScrollTrigger.refresh(); });

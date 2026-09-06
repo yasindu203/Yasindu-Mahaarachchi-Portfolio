@@ -36,6 +36,7 @@
 
       applyTheme(next);
       localStorage.setItem(STORAGE_KEY, next);
+      document.dispatchEvent(new CustomEvent('themeChange', { detail: { theme: next } }));
     });
   }
 

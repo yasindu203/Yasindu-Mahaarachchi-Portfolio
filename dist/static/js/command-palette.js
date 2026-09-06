@@ -7,22 +7,26 @@
 (function () {
   'use strict';
 
-  var COMMANDS = [
-    { id: 'home',       label: 'Home',                   icon: '⌂', action: function() { scrollToSection('#hero'); } },
-    { id: 'about',      label: 'About',                  icon: '◉', action: function() { scrollToSection('#about'); } },
-    { id: 'education',  label: 'Education',              icon: '🎓', action: function() { scrollToSection('#education'); } },
-    { id: 'experience', label: 'Experience',             icon: '💼', action: function() { scrollToSection('#experience'); } },
-    { id: 'skills',     label: 'Skills',                 icon: '◈', action: function() { scrollToSection('#skills'); } },
-    { id: 'projects',   label: 'Projects',               icon: '⬡', action: function() { scrollToSection('#projects'); } },
-    { id: 'certs',      label: 'Certifications',         icon: '◎', action: function() { scrollToSection('#certifications'); } },
-    { id: 'events',     label: 'Events',                 icon: '◇', action: function() { scrollToSection('#events'); } },
-    { id: 'contact',    label: 'Contact',                icon: '✉', action: function() { scrollToSection('#contact'); } },
-    { id: 'github',     label: 'GitHub Profile',         icon: '⌥', action: function() { window.open('https://github.com/yasindumahaarachchi', '_blank', 'noopener'); } },
-    { id: 'linkedin',   label: 'LinkedIn Profile',       icon: 'in', action: function() { window.open('https://linkedin.com/in/yasindumahaarachchi', '_blank', 'noopener'); } },
-    { id: 'cv',         label: 'Download CV',            icon: '⬇', action: function() { window.open('static/assets/cv.pdf', '_blank'); } },
-    { id: 'depth',      label: 'Switch to Depth Mode',   icon: '☯', action: function() { var btn = document.getElementById('yy-toggle'); if (btn) btn.click(); } },
-    { id: 'terminal',   label: 'Open Terminal',          icon: '>_', action: function() { openTerminal(); } },
-  ];
+  function getCommands() {
+    var isDark = document.body.classList.contains('dark');
+    var toggleLabel = isDark ? 'Switch to Professional Mode' : 'Switch to Depth Mode';
+    return [
+      { id: 'home',       label: 'Home',                   icon: '⌂', action: function() { scrollToSection('#hero'); } },
+      { id: 'about',      label: 'About',                  icon: '◉', action: function() { scrollToSection('#about'); } },
+      { id: 'education',  label: 'Education',              icon: '🎓', action: function() { scrollToSection('#education'); } },
+      { id: 'experience', label: 'Experience',             icon: '💼', action: function() { scrollToSection('#experience'); } },
+      { id: 'skills',     label: 'Skills',                 icon: '◈', action: function() { scrollToSection('#skills'); } },
+      { id: 'projects',   label: 'Projects',               icon: '⬡', action: function() { scrollToSection('#projects'); } },
+      { id: 'certs',      label: 'Certifications',         icon: '◎', action: function() { scrollToSection('#certifications'); } },
+      { id: 'events',     label: 'Events',                 icon: '◇', action: function() { scrollToSection('#events'); } },
+      { id: 'contact',    label: 'Contact',                icon: '✉', action: function() { scrollToSection('#contact'); } },
+      { id: 'github',     label: 'GitHub Profile',         icon: '⌥', action: function() { window.open('https://github.com/yasindumahaarachchi', '_blank', 'noopener'); } },
+      { id: 'linkedin',   label: 'LinkedIn Profile',       icon: 'in', action: function() { window.open('https://linkedin.com/in/yasindumahaarachchi', '_blank', 'noopener'); } },
+      { id: 'cv',         label: 'Download CV',            icon: '⬇', action: function() { var a = document.getElementById('hero-cv-btn'); if (a && a.href) { window.open(a.href, '_blank'); } else { window.open('static/assets/cv.pdf', '_blank'); } } },
+      { id: 'mode',       label: toggleLabel,              icon: '☯', action: function() { var btn = document.getElementById('yy-toggle'); if (btn) btn.click(); } },
+      { id: 'terminal',   label: 'Open Terminal',          icon: '>_', action: function() { openTerminal(); } },
+    ];
+  }
 
   function scrollToSection(hash) {
     closePalette();
@@ -110,7 +114,8 @@
     list.innerHTML = '';
     activeIndex = -1;
 
-    var filtered = COMMANDS.filter(function (cmd) {
+    var commands = getCommands();
+    var filtered = commands.filter(function (cmd) {
       if (!query) return true;
       return cmd.label.toLowerCase().includes(query.toLowerCase()) ||
              cmd.id.toLowerCase().includes(query.toLowerCase());

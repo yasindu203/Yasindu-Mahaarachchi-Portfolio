@@ -14,17 +14,24 @@
     tab.addEventListener('click', function () {
       const target = tab.dataset.tab;
 
-      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tabs.forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
       panels.forEach(function (p) {
         p.classList.remove('active');
+        p.setAttribute('hidden', '');
+        p.setAttribute('aria-hidden', 'true');
         p.style.display = '';
       });
 
       tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
 
       const panel = document.getElementById('tab-' + target);
       if (panel) {
-        // Small delay to allow CSS display change before opacity animates
+        panel.removeAttribute('hidden');
+        panel.removeAttribute('aria-hidden');
         panel.style.display = 'block';
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {

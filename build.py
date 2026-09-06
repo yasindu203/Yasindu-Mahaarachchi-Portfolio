@@ -18,6 +18,7 @@ Content file format (Key: Value, multi-line Body supported):
 
 import os
 import shutil
+import json
 import html as html_mod
 from pathlib import Path
 from datetime import datetime
@@ -71,7 +72,7 @@ def load_folder(folder: Path) -> list[dict]:
         return items
     for f in sorted(folder.glob('*.txt')):
         data = parse_txt(f)
-        data['_slug'] = f.stem
+        data['_slug'] = f.stem.lower().replace(' ', '-')
         items.append(data)
     # Allow explicit ordering via "Order:" field
     items.sort(key=lambda x: int(x.get('order', '99')))
@@ -735,6 +736,40 @@ def build_html(identity, education, experience, projects,
     first   = name.split()[0] if name else name
     year    = datetime.now().year
 
+    site_data = {
+        'name': identity.get('name', 'Yasindu Mahaarachchi'),
+        'tagline': identity.get('tagline', ''),
+        'bio': identity.get('bio', ''),
+        'location': identity.get('location', ''),
+        'email': identity.get('email', ''),
+        'phone': identity.get('phone', ''),
+        'linkedin': identity.get('linkedin', ''),
+        'github': identity.get('github', ''),
+        'cv': identity.get('cv', 'static/assets/cv.pdf'),
+        'projects': [
+            {'title': p.get('title', ''), 'tags': p.get('tags', ''), 'status': p.get('status', 'Completed')}
+            for p in projects
+        ],
+        'experience': [
+            {'title': e.get('title', ''), 'company': e.get('company', ''), 'period': e.get('period', '')}
+            for e in experience
+        ],
+        'education': [
+            {'institution': ed.get('institution', ''), 'degree': ed.get('degree', ''), 'period': ed.get('period', ''), 'detail': ed.get('detail', '')}
+            for ed in education
+        ],
+        'certifications': [
+            f"{c.get('title', '')} ({c.get('issuer', '')})" if c.get('issuer') else c.get('title', '')
+            for c in certifications
+        ],
+        'leadership': [
+            f"{l.get('organization', '')} — {l.get('role', '')}" if l.get('role') else l.get('organization', '')
+            for l in leadership
+        ],
+        'skills': identity.get('skills', '')
+    }
+    site_data_json = json.dumps(site_data)
+
     light_sections = '\n'.join([
         gen_hero(identity),
         gen_about(identity),
@@ -911,6 +946,7 @@ def build_html(identity, education, experience, projects,
 <script src="static/js/tabs.js"></script>
 <script src="static/js/motion.js"></script>
 <script src="static/js/command-palette.js"></script>
+<script>window.__SITE_DATA__ = {site_data_json};</script>
 <script src="static/js/terminal.js"></script>
 <script src="static/js/horizontal-scroll.js"></script>
 </body>
@@ -929,7 +965,11 @@ def copy_assets():
     assets_dest = DIST / 'assets'
     assets_dest.mkdir(exist_ok=True)
 
-    # Copy logos
+    # Copy logos (check both static/assets/logos and content/logos)
+    static_logos = STATIC / 'assets' / 'logos'
+    if static_logos.exists():
+        shutil.copytree(static_logos, assets_dest / 'logos', dirs_exist_ok=True)
+
     logos_src = CONTENT / 'logos'
     if logos_src.exists():
         shutil.copytree(logos_src, assets_dest / 'logos', dirs_exist_ok=True)

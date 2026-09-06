@@ -8,7 +8,7 @@
   'use strict';
 
   /* ── Real Site Data ────────────────────────────────────────── */
-  var SITE_DATA = {
+  var DEFAULT_SITE_DATA = {
     name: 'Yasindu Mahaarachchi',
     tagline: 'Engineering Undergraduate | CIMA Student | Consulting & Supply Chain Aspirant',
     bio: 'Analytical Transport Management and Logistics Engineering undergraduate at University of Moratuwa. Backed by CIMA Strategic Level studies and a growing foundation in Machine Learning and SAP business processes.',
@@ -48,6 +48,8 @@
     ],
     skills: 'Operations Research, Quantitative Methods, Data Analysis, Advanced Excel, Python, Java, R, C#, Video Editing',
   };
+
+  var SITE_DATA = window.__SITE_DATA__ || DEFAULT_SITE_DATA;
 
   /* ── Command Handlers ──────────────────────────────────────── */
   var COMMANDS = {
