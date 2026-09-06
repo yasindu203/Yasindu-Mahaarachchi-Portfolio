@@ -27,103 +27,6 @@
     });
   }
 
-  /* ── Build horizontal pinned section ────────────────────────── */
-  function buildHorizontal(sectionId, cardSel, titleText) {
-    var section = document.getElementById(sectionId);
-    if (!section) return;
-
-    var cards = Array.from(section.querySelectorAll(cardSel));
-    if (cards.length < 2) return;
-
-    var count = cards.length;
-    resetMotion(section);
-    cards.forEach(resetMotion);
-
-    section.classList.add('h-scroll-converted');
-
-    var inner = section.querySelector('.section-inner');
-    if (!inner) return;
-
-    /* Left label */
-    var label = document.createElement('div');
-    label.className = 'h-scroll-label';
-
-    var labelTop = document.createElement('span');
-    labelTop.className = 'h-scroll-eyebrow';
-    labelTop.textContent = 'Scroll to explore';
-
-    var titleEl = document.createElement('h2');
-    titleEl.className = 'h-scroll-title';
-    titleEl.textContent = titleText;
-
-    var counter = document.createElement('div');
-    counter.className = 'h-scroll-counter';
-    counter.textContent = '01 / ' + pad(count);
-
-    var pwrap = document.createElement('div');
-    pwrap.className = 'h-scroll-progress-wrap';
-    var pfill = document.createElement('div');
-    pfill.className = 'h-scroll-progress-fill';
-    pwrap.appendChild(pfill);
-
-    label.appendChild(labelTop);
-    label.appendChild(titleEl);
-    label.appendChild(counter);
-    label.appendChild(pwrap);
-
-    /* Right viewport + track */
-    var viewport = document.createElement('div');
-    viewport.className = 'h-scroll-viewport';
-    var track = document.createElement('div');
-    track.className = 'h-scroll-track';
-    cards.forEach(function (c) { track.appendChild(c); });
-    viewport.appendChild(track);
-
-    /* Outer */
-    var outer = document.createElement('div');
-    outer.className = 'h-scroll-outer';
-    outer.appendChild(label);
-    outer.appendChild(viewport);
-
-    inner.style.cssText = 'max-width:unset;padding:0;';
-    inner.innerHTML = '';
-    inner.appendChild(outer);
-
-    /* Initial card states */
-    cards.forEach(function (c, i) {
-      c.classList.toggle('h-inactive', i !== 0);
-    });
-
-    /* GSAP */
-    gsap.to(track, {
-      x: function () {
-        return -(Math.max(0, track.scrollWidth - viewport.offsetWidth + 60));
-      },
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: function () {
-          return '+=' + (Math.max(0, track.scrollWidth - viewport.offsetWidth + 60) + 140);
-        },
-        pin: true,
-        anticipatePin: 1,
-        scrub: 1.4,
-        invalidateOnRefresh: true,
-        onUpdate: function (self) {
-          pfill.style.transform = 'scaleX(' + self.progress + ')';
-          var idx = Math.min(Math.floor(self.progress * count), count - 1);
-          counter.textContent = pad(idx + 1) + ' / ' + pad(count);
-          cards.forEach(function (c, i) {
-            c.classList.toggle('h-inactive', i !== idx);
-          });
-        }
-      }
-    });
-  }
-
-
-
   /* ── Experience featured card (1 entry) ─────────────────────── */
   function buildExperienceFeature() {
     var section = document.getElementById('experience');
@@ -291,8 +194,6 @@
     /* Small delay: let motion.js run first, then override */
     setTimeout(function () {
       buildExperienceFeature();
-      buildHorizontal('projects',   '.project-card',    'Projects');
-      buildHorizontal('leadership', '.leadership-item',  'Leadership & Volunteering');
       initCopyButtons();
 
       /* Refresh after fonts + images load or theme changes */
