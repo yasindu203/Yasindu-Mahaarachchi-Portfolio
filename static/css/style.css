@@ -425,23 +425,44 @@ body.dark  .dark-mode-content  { display: flex !important; flex-direction: colum
 .hero-photo-wrap {
   display: flex;
   justify-content: center;
+  position: relative;
   animation: heroFadeUp 0.9s 0.3s var(--ease-secondary) both;
 }
 
+/* Decorative accent ring behind the circular photo */
+.hero-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--accent) 0deg,
+    var(--accent-dim) 120deg,
+    transparent 180deg,
+    var(--accent-dim) 240deg,
+    var(--accent) 360deg
+  );
+  opacity: 0.6;
+  animation: heroFadeUp 0.9s 0.3s var(--ease-secondary) both;
+  z-index: 0;
+}
+
 .hero-photo {
-  width: min(420px, 100%);
-  aspect-ratio: 4/5;
+  width: min(340px, 100%);
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   object-position: top center;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  border: 4px solid var(--bg-card);
-  outline: 1px solid var(--border);
+  border-radius: 50%;
+  box-shadow: 0 8px 40px rgba(34, 38, 43, 0.18);
+  border: 4px solid var(--bg);
+  outline: 2px solid var(--accent-border);
   transition: box-shadow var(--transition), transform 400ms var(--ease-primary);
+  position: relative;
+  z-index: 1;
 }
 .hero-photo:hover {
-  box-shadow: 0 16px 56px rgba(34,38,43,0.2);
-  transform: scale(1.015);
+  box-shadow: 0 16px 56px rgba(34,38,43,0.22);
+  transform: scale(1.02);
 }
 
 /* ─── SECTIONS ───────────────────────────────────────────────── */
@@ -460,11 +481,12 @@ body.dark  .dark-mode-content  { display: flex !important; flex-direction: colum
   font-family: var(--font-head);
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   color: var(--text);
   margin-bottom: 48px;
   position: relative;
   display: inline-block;
+  line-height: 1.1;
 }
 
 .section-title::after {
@@ -2117,15 +2139,6 @@ body.dark .badge-reading {
   transition: none;   /* driven entirely by GSAP onUpdate */
 }
 
-/* ── Counter e.g. "01 / 05" ──────────────────────────────────── */
-.gated-counter {
-  font-family: var(--font-mono);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.06em;
-  flex-shrink: 0;
-}
 
 /* ── Certifications: compact CIMA summary in label ────────────── */
 .gated-cima-mini {
@@ -2176,26 +2189,39 @@ body.dark .badge-reading {
 /* ── Scrollable card track ────────────────────────────────────── */
 .gated-track {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   align-items: stretch;
   height: calc(100vh - var(--nav-height) - 80px);
-  padding: 0 clamp(24px, 4vw, 64px);
+  padding: 0 clamp(20px, 3vw, 48px);
   will-change: transform;
-  /* Extra right padding so the last card has breathing room */
-  padding-right: clamp(48px, 8vw, 120px);
+  padding-right: clamp(40px, 6vw, 96px);
 }
 
-/* ── Individual gated cards ──────────────────────────────────── */
+/* ── Individual gated cards (default — projects size) ────────── */
 .gated-card {
   flex-shrink: 0;
-  width: clamp(300px, 38vw, 480px);
+  width: clamp(280px, 36vw, 460px);
   height: 100%;
   overflow-y: auto;
   scrollbar-width: none;
-  /* Ensure cards are visible — overrides any motion.js opacity:0 */
   opacity: 1 !important;
 }
 .gated-card::-webkit-scrollbar { display: none; }
+
+/* ── Education cards: narrower, content-fitted ───────────────── */
+#education .gated-card {
+  width: clamp(220px, 24vw, 300px);
+}
+
+/* ── Certification cards: medium, readable ───────────────────── */
+#certifications .gated-card {
+  width: clamp(230px, 26vw, 320px);
+}
+
+/* ── Leadership cards: compact, content-fitted ───────────────── */
+#leadership .gated-card {
+  width: clamp(220px, 25vw, 300px);
+}
 
 /* Active card: subtle accent highlight as it enters center-view */
 .gated-card--active {
@@ -2204,24 +2230,21 @@ body.dark .badge-reading {
 }
 
 /* ── Education: timeline-item → portrait card ────────────────── */
-/* The timeline container is empty once cards are moved to the track;
-   these rules style each .timeline-item to look like a standalone card */
 .gated-section#education .timeline {
-  display: contents;    /* dissolve the container; only its children matter */
+  display: contents;
 }
 
 .gated-section#education .timeline-item {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 32px 28px 32px 36px;   /* left indent for accent bar */
+  padding: 20px 18px 20px 24px;
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  /* Reset old vertical-timeline spacing */
+  gap: 8px;
   padding-bottom: 0;
   transition:
     border-color var(--transition-fast),
@@ -2232,27 +2255,39 @@ body.dark .badge-reading {
   content: '';
   position: absolute;
   top: 0; left: 0;
-  width: 4px; height: 100%;
+  width: 3px; height: 100%;
   background: var(--accent);
-  border-radius: 0;
 }
 
-/* Hide the dot (for vertical timeline) in horizontal layout */
 .gated-section#education .timeline-dot { display: none; }
 
-/* Stack date below title inside the card */
 .gated-section#education .timeline-header {
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
-  margin-bottom: 4px;
+  gap: 4px;
+  margin-bottom: 2px;
 }
 
 .gated-section#education .timeline-date {
   align-self: flex-start;
 }
 
-/* ── Leadership: leadership-item → card ───────────────────────── */
+.gated-section#education .timeline-title {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.gated-section#education .timeline-subtitle {
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.gated-section#education .timeline-detail {
+  font-size: 0.75rem;
+}
+
+/* ── Leadership: leadership-item → compact card ──────────────── */
 .gated-section#leadership .leadership-grid {
   display: contents;
 }
@@ -2261,14 +2296,137 @@ body.dark .badge-reading {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 18px 20px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
+  border-left: 3px solid var(--accent);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
+}
+
+.gated-section#leadership .leadership-org {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+}
+
+.gated-section#leadership .leadership-position {
+  font-size: 0.75rem;
+}
+
+.gated-section#leadership .leadership-date {
+  font-size: 0.72rem;
+}
+
+.gated-section#leadership .leadership-desc {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* ── Certifications in gated track: compact padding ─────────── */
+.gated-section#certifications .cert-card {
+  padding: 16px;
+}
+
+.gated-section#certifications .cert-title {
+  font-family: var(--font-head);
+  font-size: 0.88rem;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.gated-section#certifications .cert-desc {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.gated-section#certifications .cert-issuer {
+  font-size: 0.72rem;
+  margin-bottom: 6px;
+}
+
+.gated-section#certifications .cert-card-top {
+  margin-bottom: 10px;
+}
+
+.gated-section#certifications .cert-logo-wrap {
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+}
+
+.gated-section#certifications .cert-logo {
+  width: 26px;
+  height: 26px;
+}
+
+.gated-section#certifications .cert-verify-btn {
+  padding: 4px 10px;
+  font-size: 0.7rem;
+}
+
+/* ── Section label column: larger heading treatment ──────────── */
+.gated-label .section-title {
+  margin-bottom: 0;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* ── Counter uses heading font for more presence ─────────────── */
+.gated-counter {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/*
+   ────────────────────────────────────────────────────────────
+   ACCENT THREAD LINE
+   A thin horizontal accent bar runs across the TOP of every
+   gated section (Education → Projects → Certifications →
+   Leadership), giving visual continuity between them.
+   The bar is the full width of the viewport and uses the
+   site accent colour with a subtle left-to-right gradient.
+   ────────────────────────────────────────────────────────────
+*/
+.gated-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    rgba(192, 138, 46, 0.55) 40%,
+    rgba(192, 138, 46, 0.15) 75%,
+    transparent 100%
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+body.dark .gated-section::before {
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    rgba(224, 166, 72, 0.5) 40%,
+    rgba(224, 166, 72, 0.12) 75%,
+    transparent 100%
+  );
+}
+
+/* Remove the plain border-top since the accent line replaces it */
+.gated-section {
+  border-top: none;
+  position: relative;
 }
 
 /* ── Mobile overrides: disable gated, show native carousel ────── */
