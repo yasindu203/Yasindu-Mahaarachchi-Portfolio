@@ -2156,51 +2156,42 @@ body.dark .badge-reading {
   white-space: nowrap !important;
 }
 
-/* ── Right viewport ───────────────────────────────────────────── */
+/* ── Right viewport: centers the card row with equal free margin ── */
 .gated-viewport {
   flex: 1;
   overflow: hidden;
   position: relative;
   display: flex;
+  /* Vertical padding creates the standard free margin above/below cards */
   align-items: center;
+  padding-top: clamp(32px, 5vh, 64px);
+  padding-bottom: clamp(32px, 5vh, 64px);
 }
 
 /* ── Scrollable card track ────────────────────────────────────── */
 .gated-track {
   display: flex;
-  gap: 20px;
-  align-items: stretch;
-  height: calc(100vh - var(--nav-height) - 80px);
+  gap: 24px;
+  /* Cards sit at top of the centered zone; viewport padding handles
+     equal free space above and below */
+  align-items: flex-start;
+  /* No fixed height — track grows with the tallest card */
   padding: 0 clamp(20px, 3vw, 48px);
-  will-change: transform;
   padding-right: clamp(40px, 6vw, 96px);
+  will-change: transform;
 }
 
-/* ── Individual gated cards (default — projects size) ────────── */
+/* ── All gated cards share the same width as Project cards ────── */
 .gated-card {
   flex-shrink: 0;
   width: clamp(280px, 36vw, 460px);
-  height: 100%;
-  overflow-y: auto;
+  /* Content-fitted height — card is only as tall as its content */
+  height: auto;
+  overflow-y: visible;
   scrollbar-width: none;
   opacity: 1 !important;
 }
 .gated-card::-webkit-scrollbar { display: none; }
-
-/* ── Education cards: very compact portrait cards ────────────── */
-#education .gated-card {
-  width: clamp(190px, 20vw, 255px);
-}
-
-/* ── Certification cards: medium, readable ───────────────────── */
-#certifications .gated-card {
-  width: clamp(220px, 24vw, 295px);
-}
-
-/* ── Leadership cards: compact, content-fitted ───────────────── */
-#leadership .gated-card {
-  width: clamp(200px, 22vw, 270px);
-}
 
 /* Active card: subtle accent highlight as it enters center-view */
 .gated-card--active {
@@ -2217,14 +2208,13 @@ body.dark .badge-reading {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 20px 18px 20px 24px;
+  padding: 24px 24px 24px 28px;
   box-shadow: var(--shadow-sm);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-bottom: 0;
+  gap: 10px;
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
@@ -2253,17 +2243,17 @@ body.dark .badge-reading {
 
 .gated-section#education .timeline-title {
   font-family: var(--font-head);
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.3;
 }
 
 .gated-section#education .timeline-subtitle {
-  font-size: 0.78rem;
-  line-height: 1.45;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .gated-section#education .timeline-detail {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
 }
 
 /* ── Leadership: leadership-item → compact card ──────────────── */
@@ -2275,11 +2265,11 @@ body.dark .badge-reading {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   border-left: 3px solid var(--accent);
   transition:
     border-color var(--transition-fast),
@@ -2288,63 +2278,63 @@ body.dark .badge-reading {
 
 .gated-section#leadership .leadership-org {
   font-family: var(--font-head);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .gated-section#leadership .leadership-position {
-  font-size: 0.75rem;
+  font-size: 0.82rem;
 }
 
 .gated-section#leadership .leadership-date {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
 }
 
 .gated-section#leadership .leadership-desc {
-  font-size: 0.78rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
-/* ── Certifications in gated track: compact padding ─────────── */
+/* ── Certifications in gated track — restore normal sizing ──── */
 .gated-section#certifications .cert-card {
-  padding: 16px;
+  padding: 24px;
 }
 
 .gated-section#certifications .cert-title {
   font-family: var(--font-head);
-  font-size: 0.88rem;
+  font-size: 1rem;
   line-height: 1.3;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .gated-section#certifications .cert-desc {
-  font-size: 0.78rem;
-  line-height: 1.5;
-  margin-bottom: 10px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
 }
 
 .gated-section#certifications .cert-issuer {
-  font-size: 0.72rem;
-  margin-bottom: 6px;
-}
-
-.gated-section#certifications .cert-card-top {
+  font-size: 0.8rem;
   margin-bottom: 10px;
 }
 
+.gated-section#certifications .cert-card-top {
+  margin-bottom: 16px;
+}
+
 .gated-section#certifications .cert-logo-wrap {
-  width: 36px;
-  height: 36px;
-  padding: 4px;
+  width: 48px;
+  height: 48px;
+  padding: 6px;
 }
 
 .gated-section#certifications .cert-logo {
-  width: 26px;
-  height: 26px;
+  width: 36px;
+  height: 36px;
 }
 
 .gated-section#certifications .cert-verify-btn {
-  padding: 4px 10px;
-  font-size: 0.7rem;
+  padding: 6px 14px;
+  font-size: 0.775rem;
 }
 
 /* ── Section label column: larger heading treatment ──────────── */
