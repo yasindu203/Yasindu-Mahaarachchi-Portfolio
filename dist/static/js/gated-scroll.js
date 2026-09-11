@@ -473,27 +473,45 @@
     mm.add(
       '(min-width: 769px) and (prefers-reduced-motion: no-preference)',
       function () {
-        var triggerPromises = [];
+        /*
+         * CRITICAL: Register ScrollTriggers in strict DOM order.
+         *
+         * WHY: When GSAP pins a section it inserts a spacer element
+         * that takes up the combined scroll height (100vh + horizontal
+         * travel). The *next* section's start position is calculated
+         * from the current DOM layout AFTER that spacer exists.
+         *
+         * Promise.all fires .then() callbacks in image-load order
+         * (whichever section's images finish first), NOT DOM order.
+         * That means Section C's trigger can be registered before
+         * Section B's spacer is even in the DOM, so GSAP calculates
+         * C's start position too early → C and B visually overlap.
+         *
+         * Fix: chain promises sequentially so each trigger is
+         * registered only after the previous section's spacer is done.
+         */
+        var chain = Promise.resolve();
 
         GATED_SECTIONS.forEach(function (cfg) {
-          var section = document.getElementById(cfg.id);
-          if (!section) return;
+          /* Capture cfg in this iteration's closure */
+          (function (cfg) {
+            chain = chain.then(function () {
+              var section = document.getElementById(cfg.id);
+              if (!section) return Promise.resolve();
 
-          /* Transform DOM to gated layout */
-          var els = buildGatedDOM(section, cfg);
-          if (!els) return;   /* skip if too few cards */
+              var els = buildGatedDOM(section, cfg);
+              if (!els) return Promise.resolve();
 
-          /* Defer ScrollTrigger creation until all images inside the
-             track are loaded — prevents stale scrollWidth measurements */
-          var p = waitForImages(els.track).then(function () {
-            createScrollTrigger(section, els);
-          });
-          triggerPromises.push(p);
+              return waitForImages(els.track).then(function () {
+                createScrollTrigger(section, els);
+              });
+            });
+          })(cfg);
         });
 
-        /* After all triggers are registered, do a global refresh so
-           GSAP recalculates positions with correct image dimensions */
-        Promise.all(triggerPromises).then(function () {
+        /* After ALL triggers are registered in DOM order, do a final
+           refresh so GSAP recalculates positions with real image sizes */
+        chain.then(function () {
           ScrollTrigger.refresh();
         });
 
