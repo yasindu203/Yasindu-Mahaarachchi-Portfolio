@@ -900,6 +900,37 @@ def build_html(identity, education, experience, projects,
   </svg>
 </button>
 
+<!-- ── DYNAMIC ISLAND NAVIGATION (Light Mode) ───────────────── -->
+<nav class="island-nav" id="island-nav" role="navigation" aria-label="Main navigation">
+  <div class="island-pill" id="island-pill">
+    <ul class="island-links" id="island-links" role="list">
+      <li><a href="#about" data-section="about">About</a></li>
+      <li><a href="#education" data-section="education">Education</a></li>
+      <li><a href="#experience" data-section="experience">Experience</a></li>
+      <li><a href="#skills" data-section="skills">Skills</a></li>
+      <li><a href="#projects" data-section="projects">Projects</a></li>
+      <li><a href="#certifications" data-section="certifications">Certifications</a></li>
+      <li><a href="#leadership" data-section="leadership">Leadership</a></li>
+      <li><a href="#contact" data-section="contact">Contact</a></li>
+    </ul>
+    <button class="island-hamburger" id="island-hamburger"
+            aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+  </div>
+</nav>
+
+<!-- ── DYNAMIC ISLAND NAVIGATION (Dark Mode) ───────────────── -->
+<nav class="island-nav" id="island-nav-dark" role="navigation" aria-label="Dark mode navigation">
+  <div class="island-pill" id="island-pill-dark">
+    <ul class="island-links" id="island-links-dark" role="list">
+      <li><a href="#tab-philosophy" data-dark-tab="philosophy" class="active">Philosophy</a></li>
+      <li><a href="#tab-journeys"   data-dark-tab="journeys">Journeys</a></li>
+      <li><a href="#tab-articles"   data-dark-tab="articles">Articles</a></li>
+    </ul>
+    <button class="island-hamburger" id="island-hamburger-dark"
+            aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+  </div>
+</nav>
+
 <!-- ═══════════════════════════════════════════════════════════
      LIGHT MODE  (The Professional — single scroll page)
      ═══════════════════════════════════════════════════════════ -->
@@ -947,19 +978,6 @@ def build_html(identity, education, experience, projects,
      DARK MODE  (The Depth — tabbed interface)
      ═══════════════════════════════════════════════════════════ -->
 <div class="dark-mode-content">
-
-  <!-- ── DYNAMIC ISLAND NAVIGATION (Dark Mode) ─────────────────── -->
-  <nav class="island-nav" id="island-nav-dark" role="navigation" aria-label="Dark mode navigation">
-    <div class="island-pill" id="island-pill-dark">
-      <ul class="island-links" id="island-links-dark" role="list">
-        <li><a href="#tab-philosophy" data-dark-tab="philosophy" class="active">Philosophy</a></li>
-        <li><a href="#tab-journeys"   data-dark-tab="journeys">Journeys</a></li>
-        <li><a href="#tab-articles"   data-dark-tab="articles">Articles</a></li>
-      </ul>
-      <button class="island-hamburger" id="island-hamburger-dark"
-              aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
-    </div>
-  </nav>
 
   <nav class="dark-nav" id="dark-nav" role="navigation" aria-label="Depth navigation">
     <div class="nav-inner">

@@ -235,8 +235,10 @@ body.dark  .dark-mode-content  { display: flex !important; flex-direction: colum
 body.dark .island-pill {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
 }
-/* Dark mode island nav hides in light mode automatically (inside .dark-mode-content) */
-/* and light mode island nav hides in dark mode (inside .light-mode-content) */
+/* Island nav visibility: both navs live at body level (fixed position).
+   Show only the relevant one based on current mode. */
+body.light #island-nav-dark { display: none; }
+body.dark  #island-nav      { display: none; }
 
 .island-links {
   display: flex;
