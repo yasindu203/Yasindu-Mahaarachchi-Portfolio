@@ -2049,9 +2049,9 @@ body.dark .badge-reading {
 .read-article-btn {
   display: inline-block;
   margin-top: 15px;
-  background: var(--accent);
-  color: var(--bg);
-  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
   padding: 10px 20px;
   border-radius: var(--radius);
   font-family: var(--font-body);
@@ -2059,12 +2059,13 @@ body.dark .badge-reading {
   font-weight: 600;
   text-decoration: none;
   text-align: center;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
 .read-article-btn:hover {
-  background: transparent;
-  color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  transform: translateY(-1px);
   opacity: 1;
 }
 

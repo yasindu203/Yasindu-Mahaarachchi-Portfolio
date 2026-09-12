@@ -506,23 +506,20 @@
 <!-- ═══════════════════════════════════════════════════════════
      DARK MODE  (The Depth — tabbed interface)
      ═══════════════════════════════════════════════════════════ -->
-<div class="dark-mode-content">
+<!-- Hidden tab buttons — needed by tabs.js; island nav clicks these programmatically -->
+<div style="display:none" aria-hidden="true">
+  <button class="dark-tab active" data-tab="philosophy"
+          id="tab-btn-philosophy" role="tab" aria-selected="true"
+          aria-controls="tab-philosophy">Philosophy</button>
+  <button class="dark-tab" data-tab="journeys"
+          id="tab-btn-journeys" role="tab" aria-selected="false"
+          aria-controls="tab-journeys">Journeys</button>
+  <button class="dark-tab" data-tab="articles"
+          id="tab-btn-articles" role="tab" aria-selected="false"
+          aria-controls="tab-articles">Articles</button>
+</div>
 
-  <nav class="dark-nav" id="dark-nav" role="navigation" aria-label="Depth navigation">
-    <div class="nav-inner">
-      <div class="dark-tabs" id="dark-tabs" role="tablist" aria-label="Depth sections">
-        <button class="dark-tab active" data-tab="philosophy"
-                id="tab-btn-philosophy" role="tab" aria-selected="true"
-                aria-controls="tab-philosophy">Philosophy</button>
-        <button class="dark-tab" data-tab="journeys"
-                id="tab-btn-journeys" role="tab" aria-selected="false"
-                aria-controls="tab-journeys">Journeys</button>
-        <button class="dark-tab" data-tab="articles"
-                id="tab-btn-articles" role="tab" aria-selected="false"
-                aria-controls="tab-articles">Articles</button>
-      </div>
-    </div>
-  </nav>
+<div class="dark-mode-content">
 
   <main class="dark-main" id="dark-main-content">
 
