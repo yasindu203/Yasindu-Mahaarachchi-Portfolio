@@ -39,6 +39,12 @@
       hasFeatured: false,
     },
     {
+      id:          'experience',
+      cardSel:     '.timeline-item',
+      minCards:    1,              /* show gated layout even with 1 entry */
+      hasFeatured: false,
+    },
+    {
       id:          'projects',
       cardSel:     '.project-card',
       minCards:    MIN_GATE_CARDS,
@@ -48,7 +54,7 @@
       id:          'certifications',
       cardSel:     '.cert-card',
       minCards:    MIN_GATE_CARDS,
-      hasFeatured: true,   /* CIMA featured card → compact summary in label */
+      hasFeatured: false,   /* CIMA mini removed — no extra card in label */
     },
     {
       id:          'leadership',
@@ -264,13 +270,16 @@
     var cards        = els.cards;
     var n            = cards.length;
 
-    /**
-     * Compute the horizontal travel distance fresh each time.
-     * invalidateOnRefresh:true calls this on every ScrollTrigger.refresh()
-     * so resizes and late font/image loads are handled automatically.
-     */
     function distance() {
       return Math.max(0, track.scrollWidth - viewport.offsetWidth);
+    }
+
+    /* Single-card section (e.g. experience with 1 job) —
+       show the gated 2-column layout without any pinning or scroll. */
+    if (n <= 1) {
+      if (progressFill) progressFill.style.display = 'none';
+      if (counter) counter.textContent = '01 / 01';
+      return;
     }
 
     gsap.to(track, {
@@ -307,89 +316,6 @@
     });
   }
 
-
-  /* ═══════════════════════════════════════════════════════════
-     EXPERIENCE — single-entry featured card
-     Kept from previous horizontal-scroll.js; no pin needed.
-     ═══════════════════════════════════════════════════════════ */
-
-  function buildExperienceFeature() {
-    var section = document.getElementById('experience');
-    if (!section) return;
-
-    var timelineItems = section.querySelectorAll('.timeline-item');
-
-    /* Only apply featured layout when there is exactly one entry.
-       If entries are added later, the gated pattern kicks in naturally
-       (the section would need to be added to GATED_SECTIONS above). */
-    if (timelineItems.length !== 1) return;
-
-    var item     = timelineItems[0];
-    var titleEl  = item.querySelector('.timeline-title');
-    var subEl    = item.querySelector('.timeline-subtitle');
-    var detailEl = item.querySelector('.timeline-detail');
-    var dateEl   = item.querySelector('.timeline-date');
-
-    /* Build featured card DOM */
-    var wrap = document.createElement('div');
-    wrap.className = 'feat-exp-wrap';
-
-    var left = document.createElement('div');
-    left.className = 'feat-exp-left';
-
-    var eyebrow = document.createElement('p');
-    eyebrow.className   = 'feat-exp-eyebrow';
-    eyebrow.textContent = 'Work Experience';
-
-    var title = document.createElement('h3');
-    title.className   = 'feat-exp-title';
-    title.textContent = titleEl ? titleEl.textContent : '';
-
-    var company = document.createElement('p');
-    company.className   = 'feat-exp-company';
-    company.textContent = subEl ? subEl.textContent : '';
-
-    var desc = document.createElement('div');
-    desc.className = 'feat-exp-desc';
-    if (detailEl) desc.innerHTML = detailEl.innerHTML;
-
-    left.appendChild(eyebrow);
-    left.appendChild(title);
-    left.appendChild(company);
-    left.appendChild(desc);
-
-    var right = document.createElement('div');
-    right.className = 'feat-exp-right';
-
-    var period = document.createElement('span');
-    period.className   = 'feat-exp-period';
-    period.textContent = dateEl ? dateEl.textContent : '';
-
-    right.appendChild(period);
-    wrap.appendChild(left);
-    wrap.appendChild(right);
-
-    /* Reveal-on-enter (matches motion.js data-reveal pattern) */
-    wrap.style.cssText =
-      'opacity:0;transform:translateY(22px);' +
-      'transition:opacity ' + REVEAL_MS + 'ms ' + EASE_PRIMARY +
-      ',transform ' + REVEAL_MS + 'ms ' + EASE_PRIMARY + ';';
-
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          wrap.style.opacity   = '1';
-          wrap.style.transform = 'translateY(0)';
-          obs.unobserve(wrap);
-        }
-      });
-    }, { threshold: 0.1 });
-    obs.observe(wrap);
-
-    /* Replace the existing timeline container */
-    var timeline = section.querySelector('.timeline');
-    if (timeline) timeline.parentNode.replaceChild(wrap, timeline);
-  }
 
 
   /* ═══════════════════════════════════════════════════════════
@@ -515,7 +441,7 @@
           ScrollTrigger.refresh();
         });
 
-        buildExperienceFeature();
+
         initCopyButtons();
 
         /* Refresh when web fonts finish loading (can shift layout) */
@@ -566,7 +492,7 @@
           });
         });
 
-        buildExperienceFeature();
+
         initCopyButtons();
       }
     );
@@ -620,7 +546,7 @@
         });
       });
 
-      buildExperienceFeature();
+
       initCopyButtons();
     });
   }

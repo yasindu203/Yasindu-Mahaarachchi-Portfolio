@@ -131,15 +131,47 @@ def gen_hero(identity: dict) -> str:
 
     first_name = name.split()[0] if name else name
 
+    # SVG brand icons — use currentColor so they inherit --text-muted / --accent
+    SVG_EMAIL = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" '
+                 'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
+                 'stroke-linejoin="round" aria-hidden="true">'
+                 '<rect x="2" y="4" width="20" height="16" rx="2"/>'
+                 '<path d="M2 7l10 7 10-7"/></svg>')
+    SVG_LINKEDIN = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" '
+                    'aria-hidden="true">'
+                    '<path d="M20.447 20.452H17.02v-5.569c0-1.328-.027-3.037-1.852-3.037'
+                    '-1.853 0-2.136 1.445-2.136 2.939v5.667H9.604V9h3.29v1.561h.046'
+                    'c.458-.869 1.576-1.784 3.243-1.784 3.467 0 4.105 2.283 4.105 5.251'
+                    'v6.424zM5.337 7.433a1.914 1.914 0 1 1 0-3.828 1.914 1.914 0 0 1 0 3.828z'
+                    'M6.986 20.452H3.685V9h3.301v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729'
+                    'v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729'
+                    'C24 .774 23.2 0 22.222 0h.003z"/></svg>')
+    SVG_GITHUB = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" '
+                  'aria-hidden="true">'
+                  '<path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387 '
+                  '.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416 '
+                  '-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 '
+                  '1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997 '
+                  '.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 '
+                  '0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 '
+                  '1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 '
+                  '3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176 '
+                  '.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921 '
+                  '.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 '
+                  'C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>')
+
     socials = ''
     if email:
-        socials += f'<a href="mailto:{h(email)}" class="social-link" title="Email" aria-label="Email">✉</a>'
+        socials += (f'<a href="mailto:{h(email)}" class="social-link" title="Email" '
+                    f'aria-label="Email">{SVG_EMAIL}</a>')
     if linkedin:
         url = linkedin if linkedin.startswith('http') else f'https://{linkedin}'
-        socials += f'<a href="{h(url)}" target="_blank" rel="noopener" class="social-link" title="LinkedIn" aria-label="LinkedIn">in</a>'
+        socials += (f'<a href="{h(url)}" target="_blank" rel="noopener" class="social-link" '
+                    f'title="LinkedIn" aria-label="LinkedIn">{SVG_LINKEDIN}</a>')
     if github:
         url = github if github.startswith('http') else f'https://{github}'
-        socials += f'<a href="{h(url)}" target="_blank" rel="noopener" class="social-link" title="GitHub" aria-label="GitHub">&#9679;</a>'
+        socials += (f'<a href="{h(url)}" target="_blank" rel="noopener" class="social-link" '
+                    f'title="GitHub" aria-label="GitHub">{SVG_GITHUB}</a>')
 
     return f"""
   <section class="hero" id="hero" aria-label="Introduction">
@@ -149,7 +181,7 @@ def gen_hero(identity: dict) -> str:
       <p class="hero-tagline">{h(tagline)}</p>
       <div class="hero-actions">
         <a href="{h(cv)}" class="btn btn-primary" id="hero-cv-btn" data-magnetic data-magnetic-strength="5">⬇ Download CV</a>
-        <a href="#contact" class="btn btn-outline" id="hero-contact-btn" data-magnetic data-magnetic-strength="5">✉ Get in Touch</a>
+        <a href="#contact" class="btn btn-outline" id="hero-contact-btn" data-magnetic data-magnetic-strength="5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px;vertical-align:-2px"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg> Get in Touch</a>
       </div>
       <div class="hero-socials" aria-label="Social links">{socials}</div>
       <div class="hero-scroll-hint" aria-hidden="true">
@@ -274,7 +306,7 @@ def gen_experience(experience: list) -> str:
       </div>"""
 
     return f"""
-  <section class="section" id="experience" aria-label="Experience" data-reveal>
+  <section class="section" id="experience" aria-label="Experience">
     <div class="section-inner">
       <h2 class="section-title">Experience</h2>
       <div class="timeline">{items}</div>
@@ -873,24 +905,22 @@ def build_html(identity, education, experience, projects,
      ═══════════════════════════════════════════════════════════ -->
 <div class="light-mode-content">
 
-  <nav class="site-nav" id="site-nav" role="navigation" aria-label="Main navigation">
-    <div class="nav-inner">
-      <a class="nav-logo" href="#hero" aria-label="{h(name)} — home">
-        <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="30" height="30" />
-        <span>{h(name)}</span>
-      </a>
-      <button class="nav-hamburger" id="nav-hamburger"
-              aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
-      <ul class="nav-links" id="nav-links" role="list">
-        <li><a href="#about">About</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#contact">Contact</a></li>
+  <!-- ── DYNAMIC ISLAND NAVIGATION ─────────────────────────── -->
+  <nav class="island-nav" id="island-nav" role="navigation" aria-label="Main navigation">
+    <div class="island-pill" id="island-pill">
+      <ul class="island-links" id="island-links" role="list">
+        <li><a href="#about" data-section="about">About</a></li>
+        <li><a href="#education" data-section="education">Education</a></li>
+        <li><a href="#experience" data-section="experience">Experience</a></li>
+        <li><a href="#skills" data-section="skills">Skills</a></li>
+        <li><a href="#projects" data-section="projects">Projects</a></li>
+        <li><a href="#certifications" data-section="certifications">Certifications</a></li>
+        <li><a href="#leadership" data-section="leadership">Leadership</a></li>
+        <li><a href="#contact" data-section="contact">Contact</a></li>
       </ul>
+      <!-- Mobile: hamburger -->
+      <button class="island-hamburger" id="island-hamburger"
+              aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     </div>
   </nav>
 
@@ -918,12 +948,21 @@ def build_html(identity, education, experience, projects,
      ═══════════════════════════════════════════════════════════ -->
 <div class="dark-mode-content">
 
+  <!-- ── DYNAMIC ISLAND NAVIGATION (Dark Mode) ─────────────────── -->
+  <nav class="island-nav" id="island-nav-dark" role="navigation" aria-label="Dark mode navigation">
+    <div class="island-pill" id="island-pill-dark">
+      <ul class="island-links" id="island-links-dark" role="list">
+        <li><a href="#tab-philosophy" data-dark-tab="philosophy" class="active">Philosophy</a></li>
+        <li><a href="#tab-journeys"   data-dark-tab="journeys">Journeys</a></li>
+        <li><a href="#tab-articles"   data-dark-tab="articles">Articles</a></li>
+      </ul>
+      <button class="island-hamburger" id="island-hamburger-dark"
+              aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+    </div>
+  </nav>
+
   <nav class="dark-nav" id="dark-nav" role="navigation" aria-label="Depth navigation">
     <div class="nav-inner">
-      <span class="dark-nav-logo">
-        <img src="static/assets/logo.png" alt="Logo" class="header-logo-img" width="28" height="28" />
-        <span>{h(name)}</span>
-      </span>
       <div class="dark-tabs" id="dark-tabs" role="tablist" aria-label="Depth sections">
         <button class="dark-tab active" data-tab="philosophy"
                 id="tab-btn-philosophy" role="tab" aria-selected="true"
