@@ -1,10 +1,124 @@
-Title: Empty Container Optimization Model
-Tags: Supply Chain, Operations Research, Logistics Engineering, Shipping, Blockchain
-Description: Designed a Kurunegala triangulation hub model to eliminate empty container repositioning waste across Sri Lanka's export corridor, reducing driver idle trips through a smart street-turn matching app.
-Metric: Modelled repositioning cost reductions of 15–26% through coordinated container pooling
-Status: Ongoing
-Order: 3
-Article: <h3 style="margin-bottom: 10px; color: var(--accent);">The Box That Goes Nowhere: What I Learned Trying to Fix Sri Lanka's Empty Container Problem</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empty Container Optimization Model &mdash; Portfolio</title>
+  <meta name="description" content="Designed a Kurunegala triangulation hub model to eliminate empty container repositioning waste across Sri Lanka&#x27;s export corridor, reducing driver idle trips through a smart street-turn matching app." />
+  <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    /* ── Project Article Page ─────────────────────────────── */
+    body { background: var(--bg); color: var(--text); }
+    .proj-page-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--nav-bg); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex; align-items: center;
+    }
+    .proj-back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color var(--transition-fast), gap var(--transition-fast);
+    }
+    .proj-back-link:hover { color: var(--accent); gap: 10px; opacity: 1; }
+    .proj-page-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+    .proj-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .proj-hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .proj-hero-desc {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .proj-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+      margin-bottom: 48px;
+    }
+    .proj-meta-row {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .article-content { font-family: var(--font-body); line-height: 1.85; color: var(--text); }
+    .article-content p { margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; }
+    .article-content h2 { font-family: var(--font-head); font-size: 1.55rem; margin: 2.2em 0 0.6em; color: var(--text); }
+    .article-content h3 { font-family: var(--font-head); font-size: 1.2rem; margin: 1.8em 0 0.4em; color: var(--text); }
+    .article-content img { border-radius: var(--radius-lg); box-shadow: var(--shadow); margin: 2em auto; display: block; max-width: 100%; }
+    .article-content ul, .article-content ol { padding-left: 1.5em; margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; line-height: 1.75; }
+    .article-content li { margin-bottom: 0.4em; }
+    .article-content strong { color: var(--text); font-weight: 700; }
+    .proj-page-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    /* Reading progress bar */
+    .reading-progress {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--accent); transform-origin: left;
+      transform: scaleX(0); z-index: 9999; transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <!-- Back nav -->
+  <nav class="proj-page-nav" aria-label="Back navigation">
+    <a href="index.html#projects" class="proj-back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Back to Projects
+    </a>
+  </nav>
+  <main class="proj-page-main">
+    <article>
+      <header class="proj-header">
+        <p class="proj-hero-eyebrow">Project</p>
+        <h1 class="proj-hero-title">Empty Container Optimization Model</h1>
+        <p class="proj-hero-desc">Designed a Kurunegala triangulation hub model to eliminate empty container repositioning waste across Sri Lanka&#x27;s export corridor, reducing driver idle trips through a smart street-turn matching app.</p>
+        <div class="proj-meta-row">
+          <div class="pills"><span class="pill">Supply Chain</span><span class="pill">Operations Research</span><span class="pill">Logistics Engineering</span><span class="pill">Shipping</span><span class="pill">Blockchain</span></div>
+          <span class="badge badge-ongoing">Ongoing</span>
+        </div>
+      </header>
+      <div class="article-content">
+        <h3 style="margin-bottom: 10px; color: var(--accent);">The Box That Goes Nowhere: What I Learned Trying to Fix Sri Lanka's Empty Container Problem</h3>
 <p>It started, of all places, with YouTube.</p>
 <p>I was watching vlogs filmed from inside prime mover cabs — the kind of raw, dashcam-style footage that long-haul truckers post because someone has to document what the job actually looks like. Narrow roads. Tight turns near market towns. A driver muttering about how hard it is to overtake a fully loaded 40-footer on a two-lane road that was never built for container traffic. And over and over, the same detail kept showing up in the background of completely unrelated videos: an empty steel box, riding on the back of a trailer, burning diesel, taking up a lane, earning nobody a rupee.</p>
 <p>That image stuck with me. Somewhere in Sri Lanka, right now, there are thousands of these empty containers on the move — not carrying cargo, not carrying revenue, just being repositioned from one point to another because the system has no better way to get a box where it's needed. Every one of those trips costs fuel, wears down a truck, occupies a driver's day, and adds a vehicle to roads that are already difficult to drive. It's an economic cost, an environmental cost, and — watching those drivers talk about the physical toll of the job — a very human one too.</p>
@@ -30,3 +144,26 @@ Article: <h3 style="margin-bottom: 10px; color: var(--accent);">The Box That Goe
 <p>That's not a small governance problem. That's the central problem. And solving it requires exactly the kind of serious, sustained government-private collaboration that, in our current context, is still closer to a dream than a plan. As group lead, the decision I had to make wasn't whether the idea was good — I still think it is. It was whether <em>we</em> were the team, at <em>this</em> moment, with <em>this</em> amount of time, who could responsibly claim we'd deliver it. We weren't, and pretending otherwise in a presentation would have been more impressive and less honest.</p>
 <p>So we picked a project we could actually see through, and we carried the empty-container idea forward as something else instead: proof, at least to ourselves, that we could take a problem seen from the outside — a driver, alone, filming his own commute — and turn it into something that held up under a real financial model. Not every good idea needs to ship immediately. Sometimes the more useful output is knowing, with actual numbers behind you, exactly what it would take to make it real.</p>
 <p>I still think about those vlogs sometimes. Somewhere out there, a driver is still hauling an empty box down a road it never needed to be on. I'd like to think we at least understood, in detail, what it would take to change that.</p>
+      </div>
+    </article>
+  </main>
+  <footer class="proj-page-footer">
+    &copy; 2026 Yasindu Mahaarachchi &middot; <a href="index.html" style="color:var(--accent)">Return home</a>
+  </footer>
+<script src="static/js/toggle.js"></script>
+<script>
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    function update() {
+      var el = document.documentElement;
+      var scrolled = el.scrollTop || document.body.scrollTop;
+      var total = el.scrollHeight - el.clientHeight;
+      bar.style.transform = 'scaleX(' + (total > 0 ? scrolled / total : 0) + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>
