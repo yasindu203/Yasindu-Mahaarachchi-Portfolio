@@ -532,17 +532,22 @@
           flexWrap:               'nowrap',
           overflowX:              'auto',
           scrollSnapType:         'x mandatory',
-          gap:                    '14px',
-          paddingBottom:          '16px',
+          gap:                    '16px',
+          paddingBottom:          '20px',
+          paddingLeft:            '4px',
+          paddingRight:           '40px', /* peek: shows edge of next card */
           WebkitOverflowScrolling:'touch',
           scrollbarWidth:         'none',
         });
 
+        /* Responsive card width: wider on tiny phones, narrower on larger phones */
+        var vw = window.innerWidth;
+        var cardW = vw <= 360 ? '88vw' : vw <= 480 ? '84vw' : '80vw';
         mobileCards.forEach(function (card) {
           card.style.scrollSnapAlign = 'start';
           card.style.flexShrink      = '0';
-          card.style.width           = '82vw';
-          card.style.maxWidth        = '360px';
+          card.style.width           = cardW;
+          card.style.maxWidth        = '400px';
         });
       });
 

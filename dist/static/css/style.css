@@ -314,7 +314,8 @@ body.dark  #island-nav      { display: none; }
     border: 1px solid var(--border-strong);
     border-radius: 16px;
     padding: 8px 0;
-    min-width: 160px;
+    min-width: 200px;
+    max-width: calc(100vw - 32px);
     box-shadow: var(--shadow-lg);
   }
   .island-links.open { display: flex; }
@@ -1972,6 +1973,8 @@ body.dark .badge-reading {
   .hero-actions { justify-content: center; }
   .hero-socials { justify-content: center; }
 
+  .hero-bio { max-width: 100%; }
+
   .about-grid,
   .contact-grid { grid-template-columns: 1fr; gap: 40px; }
 
@@ -1980,6 +1983,9 @@ body.dark .badge-reading {
 
   .dark-nav .nav-inner { padding-right: 68px; }
   .dark-nav-logo { display: none; }
+
+  /* Section title margin tighter on tablet */
+  .section-title { margin-bottom: 36px; }
 
   /* Disable cursor label on tablet */
   .cursor-label { display: none !important; }
@@ -2009,6 +2015,13 @@ body.dark .badge-reading {
 
   .hero-name { font-size: 2.4rem; }
 
+  /* Cap photo height so it doesn't dominate on small screens */
+  .hero-photo {
+    width: min(320px, 90%);
+    max-height: 340px;
+    aspect-ratio: 4 / 4.5;
+  }
+
   .projects-grid,
   .certs-grid,
   .leadership-grid { grid-template-columns: 1fr; }
@@ -2016,7 +2029,18 @@ body.dark .badge-reading {
   .dark-tabs { gap: 2px; }
   .dark-tab { padding: 8px 12px; font-size: 0.8rem; }
 
-  .journey-subnav { flex-wrap: wrap; }
+  /* Dark mode panel: reduce wasted vertical space */
+  .dark-panel-inner { padding: 40px 16px 56px; }
+
+  .journey-subnav { flex-wrap: wrap; gap: 8px; }
+  .journey-subnav-btn { padding: 6px 14px; font-size: 0.8rem; }
+
+  /* iOS Safari zoom prevention — inputs must be ≥ 16px */
+  .form-group input,
+  .form-group textarea { font-size: 16px; }
+
+  /* Section title tighter margin */
+  .section-title { margin-bottom: 28px; }
 
   .yy-toggle { top: 12px; right: 14px; width: 38px; height: 38px; }
 
@@ -2614,4 +2638,184 @@ body.dark .gated-section::before {
     padding: 1.5rem;
     gap: 1rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS — COMPREHENSIVE OVERRIDES v2
+   Refined breakpoints for phones (≤480px), tablets (769–900px),
+   project article pages, swipe carousels, and dark mode panels.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── TABLET-SPECIFIC (769px – 900px) ────────────────────────── */
+@media (min-width: 769px) and (max-width: 900px) {
+  :root { --section-pad: 72px 20px; }
+
+  .hero {
+    gap: 36px;
+    padding: 72px 24px 56px;
+  }
+
+  .gated-label {
+    width: 220px;
+    padding-left: clamp(16px, 3vw, 28px);
+  }
+
+  .gated-card { width: clamp(240px, 30vw, 380px); }
+}
+
+/* ─── MOBILE (≤ 768px): layout refinements ───────────────────── */
+@media (max-width: 768px) {
+
+  /* Footer: stack and center on mobile */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+  .footer-cmd-hint { display: none; }
+
+  /* Contact: allow detail row to wrap */
+  .contact-detail { flex-wrap: wrap; }
+
+  /* Dark mode: article/journey headers stack vertically */
+  .dark-article-header { flex-direction: column; gap: 6px; }
+  .dark-article-date   { align-self: flex-start; }
+  .journey-entry-header { flex-direction: column; gap: 6px; }
+  .journey-entry-date   { align-self: flex-start; }
+
+  /* Gated label: progress bar spacing */
+  .gated-label .gated-progress-wrap { margin-top: 12px; }
+
+  /* ── PROJECT ARTICLE PAGE ─────────────────────────────────── */
+  .proj-page-main { padding: 32px 16px 56px !important; }
+
+  .proj-hero-title {
+    font-size: clamp(1.7rem, 7vw, 2.4rem) !important;
+  }
+
+  /* Inline image galleries (display:flex rows inside articles)
+     switch from horizontal-scroll to vertical stacking */
+  .proj-page-main div[style*="overflow-x"] {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+    gap: 10px !important;
+    margin: 16px 0 !important;
+  }
+  .proj-page-main div[style*="overflow-x"] img {
+    width: 100% !important;
+    height: 220px !important;
+    object-fit: cover !important;
+  }
+
+  /* Carousel peek: right padding reveals the edge of the next card */
+  .projects-grid[style],
+  .certs-grid[style],
+  .leadership-grid[style],
+  .timeline[style] {
+    padding-right: 36px !important;
+    scroll-padding-left: 4px;
+  }
+}
+
+/* ─── SMALL PHONES (≤ 480px) ─────────────────────────────────── */
+@media (max-width: 480px) {
+  :root { --section-pad: 40px 14px; }
+
+  /* Hero */
+  .hero { padding: 36px 14px 40px; gap: 24px; }
+
+  .hero-name {
+    font-size: clamp(1.9rem, 9.5vw, 2.6rem);
+    letter-spacing: -0.04em;
+  }
+
+  .hero-photo {
+    width: min(260px, 88%);
+    aspect-ratio: 1 / 1;
+    max-height: 260px;
+    border-radius: 20px;
+  }
+
+  .hero-tagline { font-size: 0.88rem; line-height: 1.5; }
+  .hero-bio     { font-size: 0.9rem; }
+
+  /* CTA buttons: stack full-width */
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { justify-content: center; width: 100%; }
+
+  /* Headings */
+  .section-title {
+    font-size: clamp(1.4rem, 6.5vw, 1.85rem);
+    margin-bottom: 22px;
+  }
+
+  /* About */
+  .about-text p { font-size: 0.92rem; line-height: 1.72; }
+
+  /* Timeline: stack date below title to prevent overflow */
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .timeline-date  { white-space: normal; }
+  .timeline-title { font-size: 1.05rem; }
+
+  /* Project cards */
+  .project-title { font-size: 1.05rem; }
+  .project-desc  { font-size: 0.85rem; }
+
+  /* Cert cards */
+  .cert-title { font-size: 0.95rem; }
+  .cert-desc  { font-size: 0.82rem; }
+
+  /* Experience featured card */
+  .feat-exp-title   { font-size: 1.25rem; }
+  .feat-exp-company { font-size: 0.95rem; }
+  .feat-exp-desc    { font-size: 0.88rem; }
+
+  /* Dark mode */
+  .dark-panel-inner    { padding: 32px 14px 48px; }
+  .dark-section-title  { font-size: clamp(1.7rem, 7vw, 2.2rem); }
+  .dark-article-title  { font-size: 1.2rem; }
+  .dark-article-body p { font-size: 0.9rem; line-height: 1.75; }
+  .journey-entry-title { font-size: 1.1rem; }
+  .journey-entry-body p { font-size: 0.9rem; line-height: 1.75; }
+
+  /* Yin-yang toggle: slightly smaller */
+  .yy-toggle { top: 10px; right: 11px; width: 34px; height: 34px; }
+
+  /* Command palette + terminal: full width with margin */
+  #cmd-dialog  { margin: 0 10px; max-width: calc(100vw - 20px); }
+  #term-window { margin: 0 10px; max-width: calc(100vw - 20px); }
+
+  /* Footer: strip extras */
+  .footer-copy  { font-size: 0.78rem; }
+  .footer-links { display: none; }
+  .footer-terminal-btn { display: none; }
+
+  /* Project article page */
+  .proj-page-main { padding: 24px 14px 48px !important; }
+  .proj-hero-title { font-size: clamp(1.5rem, 8vw, 2rem) !important; }
+  .proj-page-main div[style*="overflow-x"] img {
+    height: 180px !important;
+  }
+
+  /* Carousel cards: slightly wider on tiny screens */
+  .projects-grid[style] > *,
+  .certs-grid[style] > *,
+  .leadership-grid[style] > *,
+  .timeline[style] > * {
+    width: 86vw !important;
+    max-width: 340px !important;
+  }
+}
+
+/* ─── VERY SMALL PHONES (≤ 360px) ───────────────────────────── */
+@media (max-width: 360px) {
+  .hero-name  { font-size: 1.75rem; }
+  .dark-tab   { padding: 6px 8px; font-size: 0.72rem; }
+  .island-links a { padding: 8px 16px; font-size: 0.78rem; }
+  .feat-exp-wrap  { padding: 1.25rem; }
 }
