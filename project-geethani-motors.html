@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Geethani Motors Project &mdash; Portfolio</title>
+  <meta name="description" content="Digitized the supply chain information flow for a local vehicle parts supplier to reduce inventory wastage and out-of-stock scenarios." />
+  <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    /* ── Project Article Page ─────────────────────────────── */
+    body { background: var(--bg); color: var(--text); }
+    .proj-page-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--nav-bg); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex; align-items: center;
+    }
+    .proj-back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color var(--transition-fast), gap var(--transition-fast);
+    }
+    .proj-back-link:hover { color: var(--accent); gap: 10px; opacity: 1; }
+    .proj-page-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+    .proj-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .proj-hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .proj-hero-desc {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .proj-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+      margin-bottom: 48px;
+    }
+    .proj-meta-row {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .article-content { font-family: var(--font-body); line-height: 1.85; color: var(--text); }
+    .article-content p { margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; }
+    .article-content h2 { font-family: var(--font-head); font-size: 1.55rem; margin: 2.2em 0 0.6em; color: var(--text); }
+    .article-content h3 { font-family: var(--font-head); font-size: 1.2rem; margin: 1.8em 0 0.4em; color: var(--text); }
+    .article-content img { border-radius: var(--radius-lg); box-shadow: var(--shadow); margin: 2em auto; display: block; max-width: 100%; }
+    .article-content ul, .article-content ol { padding-left: 1.5em; margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; line-height: 1.75; }
+    .article-content li { margin-bottom: 0.4em; }
+    .article-content strong { color: var(--text); font-weight: 700; }
+    .proj-page-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    /* Reading progress bar */
+    .reading-progress {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--accent); transform-origin: left;
+      transform: scaleX(0); z-index: 9999; transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <!-- Back nav -->
+  <nav class="proj-page-nav" aria-label="Back navigation">
+    <a href="index.html#projects" class="proj-back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Back to Projects
+    </a>
+  </nav>
+  <main class="proj-page-main">
+    <article>
+      <header class="proj-header">
+        <p class="proj-hero-eyebrow">Project</p>
+        <h1 class="proj-hero-title">The Geethani Motors Project</h1>
+        <p class="proj-hero-desc">Digitized the supply chain information flow for a local vehicle parts supplier to reduce inventory wastage and out-of-stock scenarios.</p>
+        <div class="proj-meta-row">
+          <div class="pills"><span class="pill">Supply Chain</span><span class="pill">Inventory Management</span><span class="pill">Logistics</span><span class="pill">B2B</span><span class="pill">SME</span></div>
+          <span class="badge badge-completed">Completed</span>
+        </div>
+      </header>
+      <div class="article-content">
+        <h3 style="margin-bottom: 10px; color: var(--accent);">The Geethani Motors Project</h3>
+<p>When you think of the automotive spare parts industry, you probably picture grease, gears, and gasoline. But behind the scenes, the real engine driving the industry is information flow. Recently, my team and I tackled a massive supply chain bottleneck for Geethani Motors, a local supplier specializing in rubber and metal vehicle seals.</p>
+<p>What started as an academic deep-dive into SME logistics quickly turned into a real-world engineering challenge. We discovered a system bogged down by rigid constraints, manual processes, and a surprising amount of waste. Here is how we engineered a turnaround.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/meeting.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Team Meeting">
+  <img src="assets/projects/geethani-motors/warehouse.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Warehouse Elevator">
+  <img src="assets/projects/geethani-motors/warehouse2.jpg" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Warehouse Racks">
+  <img src="assets/projects/geethani-motors/dashboard2.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 2">
+</div>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">The 10,000-Unit Headache</h4>
+<p>Geethani Motors was facing a classic supply chain trap. Rubber seals have a finite shelf life. If they sit in a warehouse too long, they degrade. Yet, Geethani was experiencing a frustrating 10% inventory wastage rate.</p>
+<p>Why? It came down to a lack of negotiation power and poor forecasting. International manufacturers were enforcing strict Minimum Order Quantities (MOQs) of 10,000 units. If Geethani only needed 3,000 parts to meet local demand, they still had to buy 10,000. Coupled with a basic static-buffer reordering system, they were practically drowning in excess stock.</p>
+<p>Worse still, there was a massive disconnect in the downstream distribution chain. B2B retailers were placing orders blindly, completely unaware of Geethani’s actual stock levels. This information asymmetry led to constant out-of-stock scenarios, unfulfilled orders, and heavy opportunity costs.</p>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">Building the Solution: A Tale of Two Dashboards</h4>
+<p>To bridge this gap, we knew we had to digitize their information flow without completely upending the internal processes their inventory managers were comfortable with. We designed a dual-dashboard system to bring real-time visibility to both sides of the supply chain.</p>
+
+<h5 style="margin-top: 10px; color: var(--text-main);">1. The Retailer B2B Portal (The External Dashboard)</h5>
+<p>We built a lightweight, no-nonsense web portal for Geethani’s network of resellers. Instead of a clunky login process, verified retailers simply enter their Retailer Identification Number (RIN).</p>
+<p>Once inside, they have instant, real-time visibility into the live stock of critical components—from Hiace rear hub seals to Tractor engine seals. Retailers can check exact quantities, input their desired order, and hit submit. No more guessing games, and no more lost sales from ordering out-of-stock items.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/dashboard3.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 3">
+  <img src="assets/projects/geethani-motors/dashboard4.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 4">
+</div>
+
+<h5 style="margin-top: 10px; color: var(--text-main);">2. The Master Inventory Tracker (The Internal Dashboard)</h5>
+<p>On the flip side, we needed a robust backend for Geethani’s team. When a retailer hits "Submit" on the frontend, it instantly triggers an automated alert to the inventory manager and logs the request in a centralized master database.</p>
+<p>This internal dashboard tracks the entire lifecycle of the order through a visual pipeline: Pending → Packed → Shipped. Once dispatched, courier and tracking details are logged. Crucially, we designed this system to assist, rather than replace, the inventory manager. Order quantities aren't blindly deducted by the algorithm; the manager retains manual control over the master stock deductions, ensuring the digital numbers always match the physical warehouse reality.</p>
+
+<div style="display: flex; gap: 10px; margin: 20px 0; overflow-x: auto;">
+  <img src="assets/projects/geethani-motors/dashboard1.png" style="height: 250px; border-radius: 8px; object-fit: cover;" alt="Dashboard 1">
+</div>
+      </div>
+    </article>
+  </main>
+  <footer class="proj-page-footer">
+    &copy; 2026 Yasindu Mahaarachchi &middot; <a href="index.html" style="color:var(--accent)">Return home</a>
+  </footer>
+<script src="static/js/toggle.js"></script>
+<script>
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    function update() {
+      var el = document.documentElement;
+      var scrolled = el.scrollTop || document.body.scrollTop;
+      var total = el.scrollHeight - el.clientHeight;
+      bar.style.transform = 'scaleX(' + (total > 0 ? scrolled / total : 0) + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workspace Portal</title>
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="stylesheet" href="static/css/admin.css" />
+</head>
+<body>
+
+  <!-- ── STEP 1: PASSWORD MODAL ──────────────────────────────── -->
+  <div class="ap-modal-overlay" id="ap-password-modal">
+    <div class="ap-auth-box">
+      <h1 class="ap-auth-title">🔐 Admin Portal</h1>
+      <p class="ap-auth-sub">Enter your master password to access the workspace control panel.</p>
+      <div class="ap-form-group">
+        <label class="ap-label" for="ap-pass-input">Master Password</label>
+        <input type="password" class="ap-input" id="ap-pass-input" placeholder="••••••••" autofocus />
+        <p id="ap-pass-error" style="color:var(--ap-danger);font-size:0.8rem;margin-top:6px;display:none;"></p>
+      </div>
+      <button class="ap-btn ap-btn-primary ap-btn-full" id="ap-pass-submit">Verify Password →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: GITHUB PAT MODAL ────────────────────────────── -->
+  <div class="ap-modal-overlay" id="ap-pat-modal" style="display:none;">
+    <div class="ap-auth-box">
+      <h1 class="ap-auth-title">🔑 GitHub Authentication</h1>
+      <p class="ap-auth-sub">Enter your GitHub Personal Access Token (PAT). Stored safely in <code>sessionStorage</code> for this browser tab session only.</p>
+      <div class="ap-form-group">
+        <label class="ap-label" for="ap-pat-input">Personal Access Token</label>
+        <input type="password" class="ap-input" id="ap-pat-input" placeholder="ghp_... or github_pat_..." />
+        <p id="ap-pat-error" style="color:var(--ap-danger);font-size:0.8rem;margin-top:6px;display:none;"></p>
+      </div>
+      <button class="ap-btn ap-btn-primary ap-btn-full" id="ap-pat-submit">Unlock Dashboard →</button>
+    </div>
+  </div>
+
+  <!-- ── MAIN APP INTERFACE ──────────────────────────────────── -->
+  <div class="ap-app" id="ap-app" style="display:none;">
+    
+    <header class="ap-header">
+      <div class="ap-brand">
+        <span>⚡ Portfolio Admin</span>
+        <span class="ap-brand-badge">LIVE REST API</span>
+      </div>
+      <div class="ap-header-actions">
+        <button class="ap-btn ap-btn-secondary" onclick="sessionStorage.clear();location.reload();">Lock Portal</button>
+      </div>
+    </header>
+
+    <main class="ap-container">
+      
+      <div class="ap-notice">
+        <span>💡</span>
+        <span>Every save operation commits directly to your GitHub repository. Once saved, GitHub Actions rebuilds and updates your live site automatically in ~60-90 seconds.</span>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="ap-dash-content"></div>
+
+      <!-- Editor Panel Container -->
+      <div id="ap-editor-container" style="display:none;"></div>
+
+    </main>
+
+  </div>
+
+  <script src="static/js/admin.js"></script>
+</body>
+</html>

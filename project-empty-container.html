@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empty Container Optimization Model &mdash; Portfolio</title>
+  <meta name="description" content="Designed a Kurunegala triangulation hub model to eliminate empty container repositioning waste across Sri Lanka&#x27;s export corridor, reducing driver idle trips through a smart street-turn matching app." />
+  <meta name="theme-color" content="#F7F3EC" />
+  <link rel="icon" type="image/png" href="static/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&family=Fjalla+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    /* ── Project Article Page ─────────────────────────────── */
+    body { background: var(--bg); color: var(--text); }
+    .proj-page-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--nav-bg); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex; align-items: center;
+    }
+    .proj-back-link {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: color var(--transition-fast), gap var(--transition-fast);
+    }
+    .proj-back-link:hover { color: var(--accent); gap: 10px; opacity: 1; }
+    .proj-page-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+    .proj-hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .proj-hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .proj-hero-desc {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .proj-header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 32px;
+      margin-bottom: 48px;
+    }
+    .proj-meta-row {
+      display: flex; align-items: center; gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .article-content { font-family: var(--font-body); line-height: 1.85; color: var(--text); }
+    .article-content p { margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; }
+    .article-content h2 { font-family: var(--font-head); font-size: 1.55rem; margin: 2.2em 0 0.6em; color: var(--text); }
+    .article-content h3 { font-family: var(--font-head); font-size: 1.2rem; margin: 1.8em 0 0.4em; color: var(--text); }
+    .article-content img { border-radius: var(--radius-lg); box-shadow: var(--shadow); margin: 2em auto; display: block; max-width: 100%; }
+    .article-content ul, .article-content ol { padding-left: 1.5em; margin-bottom: 1.4em; color: var(--text-muted); font-size: 1rem; line-height: 1.75; }
+    .article-content li { margin-bottom: 0.4em; }
+    .article-content strong { color: var(--text); font-weight: 700; }
+    .proj-page-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    /* Reading progress bar */
+    .reading-progress {
+      position: fixed; top: 0; left: 0; width: 100%; height: 3px;
+      background: var(--accent); transform-origin: left;
+      transform: scaleX(0); z-index: 9999; transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+  <!-- Back nav -->
+  <nav class="proj-page-nav" aria-label="Back navigation">
+    <a href="index.html#projects" class="proj-back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Back to Projects
+    </a>
+  </nav>
+  <main class="proj-page-main">
+    <article>
+      <header class="proj-header">
+        <p class="proj-hero-eyebrow">Project</p>
+        <h1 class="proj-hero-title">Empty Container Optimization Model</h1>
+        <p class="proj-hero-desc">Designed a Kurunegala triangulation hub model to eliminate empty container repositioning waste across Sri Lanka&#x27;s export corridor, reducing driver idle trips through a smart street-turn matching app.</p>
+        <div class="proj-meta-row">
+          <div class="pills"><span class="pill">Supply Chain</span><span class="pill">Operations Research</span><span class="pill">Logistics Engineering</span><span class="pill">Shipping</span><span class="pill">Blockchain</span></div>
+          <span class="badge badge-ongoing">Ongoing</span>
+        </div>
+      </header>
+      <div class="article-content">
+        <h3 style="margin-bottom: 10px; color: var(--accent);">The Box That Goes Nowhere: What I Learned Trying to Fix Sri Lanka's Empty Container Problem</h3>
+<p>It started, of all places, with YouTube.</p>
+<p>I was watching vlogs filmed from inside prime mover cabs — the kind of raw, dashcam-style footage that long-haul truckers post because someone has to document what the job actually looks like. Narrow roads. Tight turns near market towns. A driver muttering about how hard it is to overtake a fully loaded 40-footer on a two-lane road that was never built for container traffic. And over and over, the same detail kept showing up in the background of completely unrelated videos: an empty steel box, riding on the back of a trailer, burning diesel, taking up a lane, earning nobody a rupee.</p>
+<p>That image stuck with me. Somewhere in Sri Lanka, right now, there are thousands of these empty containers on the move — not carrying cargo, not carrying revenue, just being repositioned from one point to another because the system has no better way to get a box where it's needed. Every one of those trips costs fuel, wears down a truck, occupies a driver's day, and adds a vehicle to roads that are already difficult to drive. It's an economic cost, an environmental cost, and — watching those drivers talk about the physical toll of the job — a very human one too.</p>
+<p>So I brought it to my team: <em>what if we could fix this?</em></p>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">How a Container Actually Moves Today</h4>
+<p>Before you can fix something, you have to understand exactly how it breaks. Here's the flow, stripped down to what actually happens on the ground.</p>
+<p><strong>On the export side:</strong> an exporter — say, a manufacturer in Kurunegala — gets an order and needs a container. The shipping line that owns the box doesn't have one sitting in Kurunegala. It has one sitting in a depot near Colombo or Gampaha, because that's where the port is and that's where the depots have always been. So an empty box gets dispatched, by truck, roughly 95 kilometers inland, purely so it can be filled. The exporter stuffs it, and the same truck — or another one — hauls it back to Colombo, fully laden this time, to be loaded onto a vessel.</p>
+<p><strong>On the import side,</strong> the mirror image happens. A container arrives at the port full of goods, gets trucked to a consignee's warehouse inland, gets destuffed — and then just sits there, empty, until someone arranges to haul it all the way back to a depot near Colombo. Nobody along that chain has a strong incentive to route it anywhere smarter. The shipping line wants its box back where its systems expect it. The depot operator gets paid whether the box comes back empty or full. The trucking company gets paid per trip either way. Everyone is individually doing their job correctly, and the <em>system</em> is still burning an entire truck journey on nothing.</p>
+<p>Multiply that by Colombo Port's own numbers — over 4.4 million TEUs moved through the port in just the first half of 2026 alone, growing at nearly 12% year over year — and you start to see the scale of what's riding around empty in the background of those vlogs. Globally, the shipping industry loses more than $10 billion a year to exactly this kind of empty repositioning. Sri Lanka is not exempt from that math; it's just that nobody has published the local number yet.</p>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">What We Tried to Build</h4>
+<p>Our first idea was ambitious: what if, instead of every shipping line jealously guarding its own fleet of boxes, containers were pooled — tracked on a shared blockchain ledger so that whichever depot was <em>actually closest</em> to an export order could dispatch the box, regardless of which company originally owned it? No more forcing every empty to detour through Colombo just to satisfy an ownership record.</p>
+<p>It's a good idea on paper, and the research backs the underlying logic — sharing and coordinated repositioning studies from ports around the world show savings in the range of 15 to 17 percent just from smarter routing, with one modeled case reaching over 26 percent under full blockchain-coordinated adoption. But an idea being <em>directionally</em> right isn't the same as it being <em>buildable</em> right now, in this context, by a team of students with a semester and no capital. So we kept pushing the design forward, and it evolved.</p>
+<p>We landed on something we called the <strong>Kurunegala Triangulation Hub</strong> — and the name matters, because it captures the actual shift in thinking. Kurunegala wasn't picked arbitrarily. It's roughly a hundred kilometers inland, sitting on a corridor with genuine industrial and export activity, far enough from Colombo that the empty-haul waste is real and expensive, close enough that a pilot could plausibly prove itself in one construction season. If pooling was ever going to work anywhere first, it was going to be on a corridor exactly like this one.</p>
+<p>The design itself had three layers. A physical dry port in Kurunegala, built as a public-private partnership — the government contributing land and customs-bonding authority, the private side contributing capital and technology — because without that partnership, the customs and regulatory approvals alone can take up to three years. On top of that, a "triangulation engine" that matches an import container that's just been emptied directly to a nearby export booking, skipping the round trip to Colombo entirely — something the container shipping industry calls a <em>street-turn</em>, and something that almost never happens today because coordinating it manually takes a phone call and a favor from about six different people.</p>
+<p>And then, the piece I'm proudest of us figuring out: <strong>the driver app.</strong></p>
+<p>Here's the problem we kept running into. Even if you build the perfect matching algorithm, you still need a prime mover physically present in Kurunegala at the right moment. And drivers are rational — nobody is going to sit around waiting for a sporadic job in Kurunegala when there's steady, predictable volume back in Colombo. You can't pay them enough to make idle waiting worth it without destroying your own economics. So instead of trying to <em>bribe</em> drivers into staying, we redesigned the trip itself. A driver drops an import container at a consignee's warehouse, and instead of driving back to Colombo empty, the app immediately shows them a nearby export job. They pick up the freshly emptied container, deliver it to the exporter, and haul the laden export box back to the port. Four paid legs instead of two paid legs and one wasted one. The app isn't really about matching containers — it's about making sure a driver never has a reason to leave Kurunegala with an empty trailer.</p>
+
+<h4 style="margin-top: 15px; color: var(--text-main);">Why We Paused</h4>
+<p>Here's the part I think matters most to actually say out loud, because it would be easy to write a blog post that ends with "and then we built it and it was great." We didn't build it. We paused it, and chose to move forward with a different project for this course instead. I want to be honest about why, because the reasoning is the actual lesson.</p>
+<p>When we ran the financial model seriously — land costs, dry port construction, container handling equipment, platform build and maintenance, the legal cost of drafting a multi-party consortium agreement — the picture that came back wasn't "this doesn't work." It was "this works, but not on a semester, and not without serious institutional weight behind it." A pilot dry port alone, done properly, needs a payback horizon measured in years, not months. It needs a government body willing to commit land and bonding authority as genuine equity, not just a courtesy meeting. It needs multiple competing shipping lines willing to trust a platform none of them individually control — and the closest real-world precedent for that, a platform called TradeLens, reached 60 percent of <em>global</em> container trade and still shut down in 2023 because the rest of the industry never fully trusted a system built around one dominant player.</p>
+<p>That's not a small governance problem. That's the central problem. And solving it requires exactly the kind of serious, sustained government-private collaboration that, in our current context, is still closer to a dream than a plan. As group lead, the decision I had to make wasn't whether the idea was good — I still think it is. It was whether <em>we</em> were the team, at <em>this</em> moment, with <em>this</em> amount of time, who could responsibly claim we'd deliver it. We weren't, and pretending otherwise in a presentation would have been more impressive and less honest.</p>
+<p>So we picked a project we could actually see through, and we carried the empty-container idea forward as something else instead: proof, at least to ourselves, that we could take a problem seen from the outside — a driver, alone, filming his own commute — and turn it into something that held up under a real financial model. Not every good idea needs to ship immediately. Sometimes the more useful output is knowing, with actual numbers behind you, exactly what it would take to make it real.</p>
+<p>I still think about those vlogs sometimes. Somewhere out there, a driver is still hauling an empty box down a road it never needed to be on. I'd like to think we at least understood, in detail, what it would take to change that.</p>
+      </div>
+    </article>
+  </main>
+  <footer class="proj-page-footer">
+    &copy; 2026 Yasindu Mahaarachchi &middot; <a href="index.html" style="color:var(--accent)">Return home</a>
+  </footer>
+<script src="static/js/toggle.js"></script>
+<script>
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    function update() {
+      var el = document.documentElement;
+      var scrolled = el.scrollTop || document.body.scrollTop;
+      var total = el.scrollHeight - el.clientHeight;
+      bar.style.transform = 'scaleX(' + (total > 0 ? scrolled / total : 0) + ')';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+</body>
+</html>
